@@ -3,311 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design Playground — Dina Dynamics</title>
-    <link rel="stylesheet" href="playground-foundation.css">
+    <title>Design Playground — Phase 3 Visual Experimentation</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--surface-primary) 100%);
+            box-sizing: border-box;
         }
 
-        .header {
-            padding: 3rem 2rem;
-            border-bottom: 1px solid var(--border-subtle);
-            background: rgba(5, 15, 32, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #050F20 0%, #080D17 100%);
+            color: #FFFFFF;
+            line-height: 1.6;
         }
 
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .header h1 {
-            margin-bottom: 0.5rem;
-            color: var(--brand-silver);
-        }
-
-        .header p {
-            color: var(--accent-light);
-            margin: 0;
-            font-size: 1.1rem;
-        }
-
-        .container {
-            max-width: 1400px;
+        main {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 4rem 2rem;
         }
 
-        h2 {
-            color: var(--brand-silver);
-            margin-top: 3rem;
-            margin-bottom: 2rem;
-            font-size: 2rem;
-            border-bottom: 2px solid var(--border-subtle);
-            padding-bottom: 1rem;
+        header {
+            margin-bottom: 4rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(192, 192, 192, 0.2);
+            padding-bottom: 2rem;
         }
 
-        h2:first-of-type {
-            margin-top: 0;
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #C0C0C0 0%, #A7C7E7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #A7C7E7;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+        }
+
+        .description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #70B9FF;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: #007BFF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 3px solid #007BFF;
+            padding-left: 1rem;
         }
 
         .experiment-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
         }
 
         .experiment-card {
-            background: rgba(10, 26, 48, 0.6);
-            border: 1px solid var(--border-subtle);
+            background: rgba(5, 15, 32, 0.8);
+            border: 1px solid rgba(192, 192, 192, 0.15);
             border-radius: 8px;
             padding: 2rem;
             transition: all 300ms ease;
             cursor: pointer;
             backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .experiment-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
+            display: flex;
+            flex-direction: column;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
-            transition: left 500ms ease;
-        }
-
-        .experiment-card:hover::before {
-            left: 100%;
         }
 
         .experiment-card:hover {
-            border-color: var(--accent-primary);
-            background: rgba(10, 26, 48, 0.9);
-            box-shadow: 0 0 30px rgba(0, 123, 255, 0.2),
-                       inset 0 0 20px rgba(0, 123, 255, 0.1);
+            background: rgba(5, 15, 32, 0.95);
+            border-color: rgba(192, 192, 192, 0.3);
             transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 123, 255, 0.15);
         }
 
         .experiment-card h3 {
-            color: var(--accent-primary);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #C0C0C0;
         }
 
         .experiment-card p {
-            color: var(--text-secondary);
+            font-size: 0.9rem;
+            color: #A7C7E7;
             margin-bottom: 1.5rem;
-            line-height: 1.6;
+            flex-grow: 1;
         }
 
-        .experiment-link {
+        .experiment-card a {
             display: inline-block;
             padding: 0.75rem 1.5rem;
-            background: rgba(0, 123, 255, 0.1);
-            border: 1px solid var(--accent-primary);
-            color: var(--accent-primary);
+            background: rgba(0, 123, 255, 0.2);
+            border: 1px solid #007BFF;
+            color: #007BFF;
             text-decoration: none;
             border-radius: 2px;
-            transition: all 200ms ease;
             font-weight: 600;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            font-size: 0.85rem;
+            transition: all 200ms ease;
+            align-self: flex-start;
         }
 
-        .experiment-link:hover {
-            background: var(--accent-primary);
-            color: var(--bg-primary);
+        .experiment-card a:hover {
+            background: rgba(0, 123, 255, 0.4);
+            border-color: #70B9FF;
+            color: #70B9FF;
         }
 
-        .info-section {
-            background: rgba(10, 26, 48, 0.4);
-            border-left: 4px solid var(--accent-primary);
-            padding: 2rem;
-            margin: 3rem 0;
-            border-radius: 2px;
+        .info-box {
+            background: rgba(5, 15, 32, 0.8);
+            border-left: 3px solid #0047AB;
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            line-height: 1.8;
         }
 
-        .info-section h4 {
-            color: var(--accent-primary);
-            margin-bottom: 1rem;
+        .info-box strong {
+            color: #007BFF;
+            display: block;
+            margin-bottom: 0.5rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
 
-        .info-section p {
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
+        .info-box code {
+            background: rgba(0, 71, 171, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 2px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            color: #70B9FF;
         }
 
-        .info-section p:last-child {
-            margin-bottom: 0;
-        }
-
-        .tech-list {
+        .tech-stack {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         .tech-item {
-            background: rgba(0, 123, 255, 0.1);
-            border: 1px solid var(--accent-primary);
-            padding: 1rem;
+            background: rgba(0, 71, 171, 0.1);
+            border: 1px solid rgba(0, 123, 255, 0.3);
+            padding: 1.5rem;
             border-radius: 4px;
-            font-size: 0.9rem;
-            color: var(--accent-light);
         }
 
-        .nav-back {
-            display: inline-block;
-            margin-bottom: 2rem;
-            padding: 0.75rem 1.5rem;
-            background: rgba(192, 192, 192, 0.1);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 2px;
-            transition: all 200ms ease;
-            font-weight: 600;
+        .tech-item strong {
+            color: #007BFF;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-item p {
+            font-size: 0.85rem;
+            color: #A7C7E7;
+        }
+
+        footer {
+            border-top: 1px solid rgba(192, 192, 192, 0.2);
+            padding-top: 2rem;
+            margin-top: 4rem;
+            text-align: center;
+            color: #70B9FF;
             font-size: 0.85rem;
         }
 
-        .nav-back:hover {
-            background: rgba(192, 192, 192, 0.2);
-            border-color: var(--brand-silver);
-            color: var(--brand-silver);
-        }
-
-        .footer {
-            border-top: 1px solid var(--border-subtle);
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 4rem;
-        }
-
         @media (max-width: 768px) {
-            .container {
-                padding: 2rem 1rem;
+            h1 {
+                font-size: 1.75rem;
             }
 
-            .header {
-                padding: 2rem 1rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
+            section h2 {
+                font-size: 1.25rem;
             }
 
             .experiment-grid {
                 grid-template-columns: 1fr;
             }
 
-            .tech-list {
-                grid-template-columns: 1fr;
+            main {
+                padding: 2rem 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-content">
+    <main>
+        <!-- Header -->
+        <header>
             <h1>Design Playground</h1>
-            <p>Phase 3 — Visual Design & Experimentation</p>
-        </div>
-    </div>
+            <p class="subtitle">Phase 3 — Visual Design & Experimentation</p>
+            <p class="description">
+                Interactive Three.js experiments exploring Dina Dynamics' visual identity: 
+                metallic surfaces, real glitter shaders, and cinematic 3D rendering.
+            </p>
+        </header>
 
-    <div class="container">
-        <a href="../index.html" class="nav-back">← Back to Site</a>
+        <!-- Experiments Section -->
+        <section>
+            <h2>Experiments</h2>
+            <div class="experiment-grid">
+                <!-- Material Playground -->
+                <div class="experiment-card">
+                    <h3>Material Playground</h3>
+                    <p>
+                        Interactive 3D sphere with real-time material editing. 
+                        Test glitter properties, metallic finishes, lighting, and bloom effects. 
+                        Switch between 5 color palettes and 5 material presets.
+                    </p>
+                    <a href="material-playground.html">Launch Experiment →</a>
+                </div>
 
-        <h2>Material Experiments</h2>
-        <div class="experiment-grid">
-            <div class="experiment-card">
-                <h3>Material Playground</h3>
-                <p>Interactive 3D sphere with procedural glitter materials. Test five different glitter presets and five color palettes in real-time with responsive lighting.</p>
-                <a href="material-playground.html" class="experiment-link">Open Playground</a>
+                <!-- Hero A: Liquid Metal -->
+                <div class="experiment-card">
+                    <h3>Hero A: Liquid Metal</h3>
+                    <p>
+                        Responsive morphing mesh that deforms based on cursor movement. 
+                        Demonstrates PBR metallic materials with realistic reflections. 
+                        Minimal text overlay on immersive 3D geometry.
+                    </p>
+                    <a href="hero-a-liquid-metal.html">Launch Experiment →</a>
+                </div>
+
+                <!-- Hero B: Glitter Field -->
+                <div class="experiment-card">
+                    <h3>Hero B: Glitter Field</h3>
+                    <p>
+                        Particle parallax system with 1500+ instances. 
+                        Each particle responds to cursor movement with individual physics. 
+                        Dense glitter material with responsive lighting and parallax depth.
+                    </p>
+                    <a href="hero-b-glitter-field.html">Launch Experiment →</a>
+                </div>
+
+                <!-- Hero C: Dimensional Type -->
+                <div class="experiment-card">
+                    <h3>Hero C: Dimensional Type</h3>
+                    <p>
+                        3D "DINA DYNAMICS" typography using real FontLoader and TextGeometry. 
+                        Beveled letters with glitter shader applied. 
+                        Professional 3D hero text as primary visual element.
+                    </p>
+                    <a href="hero-c-dimensional-type.html">Launch Experiment →</a>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <h2>Hero Concepts</h2>
-        <div class="experiment-grid">
-            <div class="experiment-card">
-                <h3>Hero A: Liquid Metal</h3>
-                <p>Responsive morphing mesh with wave deformation. Full-screen immersive geometry that reacts to cursor movement with realistic metallic reflections.</p>
-                <a href="hero-a-liquid-metal.html" class="experiment-link">View Concept</a>
+        <!-- Technology Stack -->
+        <section>
+            <h2>Technology Stack</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <strong>Three.js r170</strong>
+                    <p>WebGL rendering engine with modern ES modules and advanced materials.</p>
+                </div>
+                <div class="tech-item">
+                    <strong>GLSL Shaders</strong>
+                    <p>Custom fragment shaders for real glitter using Worley noise patterns.</p>
+                </div>
+                <div class="tech-item">
+                    <strong>MeshPhysicalMaterial</strong>
+                    <p>PBR material with clearcoat, metalness, and roughness controls.</p>
+                </div>
+                <div class="tech-item">
+                    <strong>PMREMGenerator</strong>
+                    <p>Environment mapping for realistic reflections on metallic surfaces.</p>
+                </div>
+                <div class="tech-item">
+                    <strong>UnrealBloomPass</strong>
+                    <p>Post-processing glow effect for highlights and glitter sparkles.</p>
+                </div>
+                <div class="tech-item">
+                    <strong>lil-gui</strong>
+                    <p>Live material and animation parameter controls in browser.</p>
+                </div>
+                <div class="tech-item">
+                    <strong>OrbitControls</strong>
+                    <p>Mouse-based 3D camera control with damping and auto-rotation.</p>
+                </div>
+                <div class="tech-item">
+                    <strong>FontLoader & TextGeometry</strong>
+                    <p>Real 3D typography with bevels and material mapping.</p>
+                </div>
             </div>
+        </section>
 
-            <div class="experiment-card">
-                <h3>Hero B: Glitter Field</h3>
-                <p>Particle-based animated field with parallax and responsive motion. 1500+ particles creating depth with mouse-influenced trajectory changes.</p>
-                <a href="hero-b-glitter-field.html" class="experiment-link">View Concept</a>
+        <!-- Setup Instructions -->
+        <section>
+            <h2>Local Development</h2>
+            <div class="info-box">
+                <strong>Start the development server:</strong>
+                <code>python3 -m http.server 8000</code>
             </div>
-
-            <div class="experiment-card">
-                <h3>Hero C: Dimensional Type</h3>
-                <p>Large 3D typography "DINA DYNAMICS" with glitter material and dramatic cinematic lighting. Responsive rotation and subtle bob animation.</p>
-                <a href="hero-c-dimensional-type.html" class="experiment-link">View Concept</a>
+            <div class="info-box">
+                <strong>Open in browser:</strong>
+                Navigate to <code>http://localhost:8000/design-playground/</code>
             </div>
-        </div>
-
-        <div class="info-section">
-            <h4>Phase 3 Technical Stack</h4>
-            <div class="tech-list">
-                <div class="tech-item">Three.js (ES Modules)</div>
-                <div class="tech-item">WebGL Rendering</div>
-                <div class="tech-item">Canvas Procedural Textures</div>
-                <div class="tech-item">PBR Materials</div>
-                <div class="tech-item">Responsive Lighting</div>
-                <div class="tech-item">Theme System (5 Palettes)</div>
+            <div class="info-box">
+                <strong>5 Color Palettes:</strong>
+                Electric Cobalt (default), Imperial Sapphire, Arctic Steel, Deep Atlantic, Midnight Titanium. 
+                Switch palettes globally from any experiment.
             </div>
-        </div>
-
-        <div class="info-section">
-            <h4>How to Use This Playground</h4>
-            <p><strong>Material Playground:</strong> Drop-down menus to switch between glitter presets and color palettes. Watch the 3D sphere update in real-time with different material properties.</p>
-            <p><strong>Hero Concepts:</strong> Each hero is a full-screen immersive experience. Move your mouse to interact with the visuals. Use the theme switcher (top right) to preview all five color palettes.</p>
-            <p><strong>Development Focus:</strong> These experiments showcase procedural glitter, metallic reflections, responsive lighting, and cursor-driven interactivity. All materials use realistic PBR (Physically Based Rendering) principles.</p>
-        </div>
-
-        <div class="info-section">
-            <h4>Theme System</h4>
-            <p>All experiments support five interchangeable color palettes with metallic silver (#C0C0C0) as the constant primary color across all themes:</p>
-            <div class="tech-list">
-                <div class="tech-item">Electric Cobalt (Default)</div>
-                <div class="tech-item">Imperial Sapphire</div>
-                <div class="tech-item">Arctic Steel</div>
-                <div class="tech-item">Deep Atlantic</div>
-                <div class="tech-item">Midnight Titanium</div>
+            <div class="info-box">
+                <strong>Material Presets:</strong>
+                Silver Chunky, Silver Fine, Silver Mixed, Cobalt Glitter, Polished Metal. 
+                Each preset includes optimized glitter parameters and material properties.
             </div>
-        </div>
+            <div class="info-box">
+                <strong>Export Settings:</strong>
+                Use the "Export as JSON" button in Material Playground to save and load custom material configurations.
+            </div>
+        </section>
 
-        <div class="info-section">
-            <h4>Next Steps</h4>
-            <p><strong>User Review:</strong> Review all three hero concepts and select the direction(s) you'd like to develop further.</p>
-            <p><strong>Material Refinement:</strong> Based on feedback, we can refine glitter parameters, lighting models, and animation responsiveness.</p>
-            <p><strong>Site Integration:</strong> Once approved, we'll integrate the selected hero and material approach across the full website, maintaining the visual impact while ensuring readability and navigation.</p>
-        </div>
-    </div>
+        <!-- Next Steps -->
+        <section>
+            <h2>Next Steps</h2>
+            <div class="info-box">
+                <strong>After Visual Review & Approval:</strong>
+                These experiments will be integrated into full website redesign using GSAP ScrollTrigger 
+                for scroll-driven animations and parallax effects across all pages.
+            </div>
+            <div class="info-box">
+                <strong>Production Deployment:</strong>
+                All <code>/design-playground/*</code> files will be blocked from production via netlify.toml 
+                and kept for internal design reference only.
+            </div>
+        </section>
 
-    <div class="footer">
-        <p>&copy; 2026 Dina Dynamics — Design Playground | Phase 3 Experimentation | All themes available | <a href="material-playground.html" style="color: var(--accent-primary);">Material Lab</a></p>
-    </div>
+        <!-- Footer -->
+        <footer>
+            <p>Dina Dynamics Design Playground — Phase 3 Visual Research & Experimentation</p>
+            <p>Rendered with Three.js, GLSL, and WebGL | Optimized for desktop</p>
+        </footer>
+    </main>
 </body>
 </html>

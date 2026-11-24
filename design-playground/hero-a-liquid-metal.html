@@ -4,345 +4,328 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hero A: Liquid Metal — Dina Dynamics</title>
-    <link rel="stylesheet" href="playground-foundation.css">
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #050F20;
+            color: #FFFFFF;
             overflow: hidden;
         }
 
-        #canvas-container {
-            width: 100%;
-            height: 100vh;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
+        #canvas {
+            display: block;
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-            z-index: 10;
         }
 
-        .hero-content {
-            text-align: center;
-            max-width: 800px;
-        }
-
-        .hero-logo {
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            color: var(--accent-primary);
-            text-shadow: 0 0 20px rgba(0, 123, 255, 0.4);
-        }
-
-        .hero-title {
-            font-size: 4rem;
-            font-weight: 900;
-            letter-spacing: -2px;
-            line-height: 1;
-            margin-bottom: 1.5rem;
-            color: var(--brand-silver);
-            text-shadow: 0 20px 60px rgba(0, 123, 255, 0.3),
-                        0 0 40px rgba(192, 192, 192, 0.2);
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: var(--accent-light);
-            margin-bottom: 3rem;
-            font-weight: 300;
-            letter-spacing: 1px;
-            text-shadow: 0 0 20px rgba(0, 123, 255, 0.2);
-        }
-
-        .hero-cta {
-            pointer-events: auto;
-            padding: 1.2rem 3rem;
-            font-size: 0.95rem;
-            font-weight: 700;
-            border: 2px solid var(--accent-primary);
-            background: rgba(0, 123, 255, 0.1);
-            color: var(--accent-primary);
-            cursor: pointer;
-            transition: all 300ms ease-out;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            backdrop-filter: blur(10px);
-            border-radius: 2px;
-        }
-
-        .hero-cta:hover {
-            background: var(--accent-primary);
-            color: var(--bg-primary);
-            box-shadow: 0 0 30px rgba(0, 123, 255, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .nav-top {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            z-index: 100;
-            pointer-events: auto;
-        }
-
-        .nav-top a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: 600;
-            transition: color 200ms ease;
-        }
-
-        .nav-top a:hover {
-            color: var(--accent-primary);
-        }
-
-        .theme-switcher {
+        .ui-panel {
             position: fixed;
             top: 2rem;
             right: 2rem;
-            z-index: 10000;
-            background: rgba(10, 26, 48, 0.8);
+            z-index: 100;
+            background: rgba(5, 15, 32, 0.95);
             border: 1px solid rgba(192, 192, 192, 0.2);
             border-radius: 8px;
-            padding: 1rem;
+            padding: 1.5rem;
             backdrop-filter: blur(10px);
-            min-width: 200px;
+            max-height: 90vh;
+            overflow-y: auto;
+            min-width: 280px;
         }
 
-        .theme-switcher label {
-            font-size: 0.75rem;
+        .ui-panel h3 {
+            font-size: 1rem;
             font-weight: 700;
+            margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--text-secondary);
-            display: block;
-            margin-bottom: 0.5rem;
+            color: #007BFF;
         }
 
-        .theme-switcher select {
-            width: 100%;
-            background: var(--accent-deep);
-            color: var(--text-primary);
-            border: 1px solid var(--accent-primary);
-            padding: 0.75rem;
-            border-radius: 4px;
-            cursor: pointer;
+        .nav-back {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+            padding: 0.75rem 1.5rem;
+            background: rgba(192, 192, 192, 0.1);
+            border: 1px solid rgba(192, 192, 192, 0.3);
+            color: #A7C7E7;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 0.85rem;
             font-weight: 600;
-            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 200ms ease;
         }
 
-        .theme-switcher select:hover {
-            background: var(--accent-primary);
+        .nav-back:hover {
+            background: rgba(192, 192, 192, 0.2);
+            border-color: rgba(192, 192, 192, 0.5);
+            color: #C0C0C0;
         }
 
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
+        .info-panel {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 100;
+            background: rgba(5, 15, 32, 0.95);
+            border: 1px solid rgba(192, 192, 192, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            max-width: 320px;
+            font-size: 0.85rem;
+        }
+
+        .info-panel p {
+            margin-bottom: 0.5rem;
+            color: #A7C7E7;
+            line-height: 1.4;
+        }
+
+        .info-panel strong {
+            color: #007BFF;
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 1024px) {
+            .ui-panel {
+                top: auto;
+                right: auto;
+                bottom: 2rem;
+                left: 2rem;
+                min-width: 100%;
+                max-width: 400px;
             }
 
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-
-            .hero-logo {
-                font-size: 0.95rem;
-            }
-
-            .hero-cta {
-                padding: 1rem 2rem;
-                font-size: 0.85rem;
+            .info-panel {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- WebGL Canvas Container -->
-    <div id="canvas-container"></div>
-
-    <!-- Hero Overlay Content -->
-    <div class="hero-overlay">
-        <div class="hero-content">
-            <div class="hero-logo">Dina Dynamics</div>
-            <h1 class="hero-title">Advanced Maritime Autonomy</h1>
-            <p class="hero-subtitle">Precision. Defense. Autonomy.</p>
-            <button class="hero-cta">Explore Platform</button>
-        </div>
-    </div>
+    <canvas id="canvas"></canvas>
 
     <!-- Navigation -->
-    <div class="nav-top">
-        <a href="material-playground.html">← Material Lab</a>
+    <a href="index.html" class="nav-back">← Back to Playground</a>
+
+    <!-- UI Panel (lil-gui will mount here) -->
+    <div class="ui-panel" id="ui-container"></div>
+
+    <!-- Info Panel -->
+    <div class="info-panel">
+        <p><strong>Hero A: Liquid Metal</strong></p>
+        <p>Responsive morphing mesh that deforms with cursor movement. Click and drag to rotate. Scroll to zoom.</p>
+        <p><strong>Features:</strong> PBR metallic material, realistic reflections, responsive deformation, cinematic lighting.</p>
     </div>
 
-    <!-- Theme Switcher -->
-    <div class="theme-switcher">
-        <label for="theme-switcher">Theme</label>
-        <select id="theme-switcher">
-            <option value="electric-cobalt" selected>Electric Cobalt</option>
-            <option value="imperial-sapphire">Imperial Sapphire</option>
-            <option value="arctic-steel">Arctic Steel</option>
-            <option value="deep-atlantic">Deep Atlantic</option>
-            <option value="midnight-titanium">Midnight Titanium</option>
-        </select>
-    </div>
+    <!-- Three.js and Dependencies -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://esm.sh/three@r170",
+        "three/addons/": "https://esm.sh/three@r170/examples/jsm/",
+        "lil-gui": "https://esm.sh/lil-gui@0.20.0"
+      }
+    }
+    </script>
 
-    <!-- Three.js and Scripts -->
+    <!-- Main Application -->
     <script type="module">
-        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@r128/build/three.module.js';
-        import { applyTheme, getCurrentTheme, THEMES } from './theme-config.js';
+        import * as THREE from 'three';
+        import { GUI } from 'lil-gui';
+        import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+        import { PMREMGenerator } from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-        // Apply default theme
-        applyTheme('electric-cobalt');
+        const config = {
+            theme: 'electric-cobalt',
+            metalness: 1.0,
+            roughness: 0.12,
+            clearcoat: 0.95,
+            clearcoatRoughness: 0.08,
+            parallaxIntensity: 0.5,
+            cameraDistance: 6,
+            lightIntensity: 1.5,
+            ambientIntensity: 0.3,
+            autoRotate: false,
+            rotationSpeed: 0.3,
+            bloomIntensity: 1.2,
+            bloomThreshold: 0.9,
+            bloomScale: 0.4
+        };
 
-        /**
-         * Hero A: Liquid Metal Morphing
-         * Full-screen mesh that responds to mouse movement with wave distortion
-         */
-        class LiquidMetalHero {
-            constructor() {
-                this.scene = new THREE.Scene();
-                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                this.camera.position.z = 5;
+        const canvas = document.getElementById('canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, canvas });
 
-                this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-                this.renderer.setSize(window.innerWidth, window.innerHeight);
-                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-                document.getElementById('canvas-container').appendChild(this.renderer.domElement);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
-                this.updateSceneColors();
-                this.setupLighting();
-                this.createLiquidMesh();
-                this.setupEventListeners();
+        camera.position.set(0, 0, config.cameraDistance);
+        scene.background = new THREE.Color('#050F20');
 
-                this.mouseX = 0;
-                this.mouseY = 0;
-                this.time = 0;
+        // Environment
+        const pmremGenerator = new PMREMGenerator(renderer);
+        const environment = new RoomEnvironment();
+        const envMap = pmremGenerator.fromScene(environment).texture;
+        scene.environment = envMap;
 
-                this.animate();
-            }
+        // Lighting
+        const keyLight = new THREE.DirectionalLight(0xFFFFFF, 1.5);
+        keyLight.position.set(5, 10, 7);
+        scene.add(keyLight);
 
-            updateSceneColors() {
-                const theme = getCurrentTheme();
-                this.scene.background = new THREE.Color(theme.darkBg);
-                this.scene.fog = new THREE.Fog(theme.darkBg, 100, 1000);
-            }
+        const fillLight = new THREE.DirectionalLight(0x70B9FF, 0.8);
+        fillLight.position.set(-5, 5, -5);
+        scene.add(fillLight);
 
-            setupLighting() {
-                const keyLight = new THREE.DirectionalLight(0xFFFFFF, 1.4);
-                keyLight.position.set(8, 12, 8);
-                this.scene.add(keyLight);
+        const ambientLight = new THREE.AmbientLight(0x1a2a4a, 0.3);
+        scene.add(ambientLight);
 
-                const fillLight = new THREE.DirectionalLight(0x70B9FF, 0.6);
-                fillLight.position.set(-8, 5, -8);
-                this.scene.add(fillLight);
+        // Mesh
+        const geometry = new THREE.IcosahedronGeometry(2, 32);
+        const positionAttribute = geometry.getAttribute('position');
+        const originalPositions = new Float32Array(positionAttribute.array);
+        
+        const material = new THREE.MeshPhysicalMaterial({
+            color: '#C0C0C0',
+            metalness: config.metalness,
+            roughness: config.roughness,
+            clearcoat: config.clearcoat,
+            clearcoatRoughness: config.clearcoatRoughness,
+            envMapIntensity: 1.5
+        });
 
-                const ambientLight = new THREE.AmbientLight(0x1a2a4a, 0.5);
-                this.scene.add(ambientLight);
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
 
-                const rimLight = new THREE.PointLight(0x007BFF, 1.2);
-                rimLight.position.set(0, 0, 10);
-                this.scene.add(rimLight);
-            }
+        // Deformation on mouse move
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
 
-            createLiquidMesh() {
-                const geometry = new THREE.IcosahedronGeometry(3, 32);
+        // Controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.autoRotate = config.autoRotate;
+        controls.autoRotateSpeed = config.rotationSpeed;
+
+        // Post-processing
+        const composer = new EffectComposer(renderer);
+        const renderPass = new RenderPass(scene, camera);
+        composer.addPass(renderPass);
+
+        const bloomPass = new UnrealBloomPass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight),
+            config.bloomIntensity,
+            config.bloomScale,
+            config.bloomThreshold
+        );
+        composer.addPass(bloomPass);
+
+        // GUI
+        const gui = new GUI({ container: document.getElementById('ui-container') });
+        gui.title('Hero A: Liquid Metal');
+
+        const matFolder = gui.addFolder('Material Properties');
+        matFolder.add(config, 'metalness', 0, 1, 0.01).onChange((v) => {
+            material.metalness = v;
+        });
+        matFolder.add(config, 'roughness', 0, 1, 0.01).onChange((v) => {
+            material.roughness = v;
+        });
+        matFolder.add(config, 'clearcoat', 0, 1, 0.01).onChange((v) => {
+            material.clearcoat = v;
+        });
+        matFolder.add(config, 'clearcoatRoughness', 0, 1, 0.01).onChange((v) => {
+            material.clearcoatRoughness = v;
+        });
+
+        const controlFolder = gui.addFolder('Controls');
+        controlFolder.add(config, 'parallaxIntensity', 0, 1, 0.1);
+        controlFolder.add(config, 'cameraDistance', 2, 15, 0.1).onChange((v) => {
+            camera.position.z = v;
+        });
+        controlFolder.add(config, 'autoRotate').onChange((v) => {
+            controls.autoRotate = v;
+        });
+
+        const lightFolder = gui.addFolder('Lighting');
+        lightFolder.add(config, 'lightIntensity', 0, 3, 0.1).onChange((v) => {
+            keyLight.intensity = v;
+        });
+        lightFolder.add(config, 'ambientIntensity', 0, 1, 0.05).onChange((v) => {
+            ambientLight.intensity = v;
+        });
+
+        const bloomFolder = gui.addFolder('Post-Processing');
+        bloomFolder.add(config, 'bloomIntensity', 0, 5, 0.1).onChange((v) => {
+            bloomPass.strength = v;
+        });
+        bloomFolder.add(config, 'bloomThreshold', 0, 1, 0.05).onChange((v) => {
+            bloomPass.threshold = v;
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            if (composer) composer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Deform mesh based on mouse
+            const positions = geometry.getAttribute('position');
+            for (let i = 0; i < positionAttribute.count; i++) {
+                const x = originalPositions[i * 3];
+                const y = originalPositions[i * 3 + 1];
+                const z = originalPositions[i * 3 + 2];
                 
-                const material = new THREE.MeshStandardMaterial({
-                    color: new THREE.Color(getCurrentTheme().silver),
-                    metalness: 1.0,
-                    roughness: 0.15,
-                    envMapIntensity: 1.2
-                });
-
-                this.mesh = new THREE.Mesh(geometry, material);
-                this.mesh.castShadow = true;
-                this.mesh.receiveShadow = true;
-
-                // Store original positions for wave deformation
-                this.originalPositions = new Float32Array(geometry.attributes.position.array);
+                const deformation = (Math.sin(Date.now() * 0.0005 + x) + Math.cos(Date.now() * 0.0007 + y)) * 0.05;
+                const mouseInfluence = (mouseX * x + mouseY * y) * 0.02 * config.parallaxIntensity;
                 
-                this.scene.add(this.mesh);
+                positions.setXYZ(i, x + mouseInfluence + deformation, y + deformation, z + mouseInfluence);
             }
+            positions.needsUpdate = true;
 
-            setupEventListeners() {
-                document.addEventListener('mousemove', (e) => {
-                    this.mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-                    this.mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-                });
+            mesh.rotation.x += 0.0005;
+            mesh.rotation.y += 0.0008;
 
-                window.addEventListener('resize', () => this.onWindowResize());
-
-                document.getElementById('theme-switcher').addEventListener('change', (e) => {
-                    applyTheme(e.target.value);
-                    this.updateSceneColors();
-                    
-                    // Update material color
-                    const theme = getCurrentTheme();
-                    this.mesh.material.color.set(theme.silver);
-                });
-            }
-
-            deformMesh() {
-                const positions = this.mesh.geometry.attributes.position;
-                const count = positions.count;
-
-                for (let i = 0; i < count; i++) {
-                    const x = this.originalPositions[i * 3];
-                    const y = this.originalPositions[i * 3 + 1];
-                    const z = this.originalPositions[i * 3 + 2];
-
-                    // Wave deformation based on mouse and time
-                    const influence = Math.sin(this.time + i * 0.1) * 0.3;
-                    const mouseInfluence = (this.mouseX + this.mouseY) * 0.1;
-
-                    positions.setXYZ(
-                        i,
-                        x * (1 + influence * 0.1 + mouseInfluence * 0.05),
-                        y * (1 + influence * 0.1 + mouseInfluence * 0.05),
-                        z * (1 + influence * 0.1 + mouseInfluence * 0.05)
-                    );
-                }
-
-                positions.needsUpdate = true;
-            }
-
-            onWindowResize() {
-                this.camera.aspect = window.innerWidth / window.innerHeight;
-                this.camera.updateProjectionMatrix();
-                this.renderer.setSize(window.innerWidth, window.innerHeight);
-            }
-
-            animate = () => {
-                requestAnimationFrame(this.animate);
-                this.time += 0.016;
-
-                this.mesh.rotation.x += 0.0005;
-                this.mesh.rotation.y += 0.0008;
-
-                this.deformMesh();
-
-                this.renderer.render(this.scene, this.camera);
-            };
+            controls.update();
+            composer.render();
         }
 
-        // Initialize
-        const hero = new LiquidMetalHero();
+        animate();
     </script>
 </body>
 </html>

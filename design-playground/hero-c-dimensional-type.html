@@ -4,387 +4,322 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hero C: Dimensional Type — Dina Dynamics</title>
-    <link rel="stylesheet" href="playground-foundation.css">
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #050F20;
+            color: #FFFFFF;
             overflow: hidden;
         }
 
-        #canvas-container {
-            width: 100%;
-            height: 100vh;
-            position: relative;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
+        #canvas {
+            display: block;
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            pointer-events: none;
-            z-index: 10;
-            padding-bottom: 6rem;
         }
 
-        .hero-content {
-            text-align: center;
-            max-width: 900px;
-            padding: 0 2rem;
-        }
-
-        .hero-tagline {
-            font-size: 1.3rem;
-            color: var(--accent-light);
-            margin-bottom: 2rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            animation: fadeInUp 1.6s ease-out 0.4s both;
-        }
-
-        .hero-cta-group {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1.6s ease-out 0.6s both;
-        }
-
-        .hero-cta {
-            pointer-events: auto;
-            padding: 1.2rem 2.8rem;
-            font-size: 0.9rem;
-            font-weight: 700;
-            border: 2px solid var(--accent-primary);
-            background: rgba(0, 123, 255, 0.1);
-            color: var(--accent-primary);
-            cursor: pointer;
-            transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            backdrop-filter: blur(10px);
-            border-radius: 2px;
-        }
-
-        .hero-cta:hover {
-            background: var(--accent-primary);
-            color: var(--bg-primary);
-            box-shadow: 0 0 40px rgba(0, 123, 255, 0.7),
-                       inset 0 0 20px rgba(0, 123, 255, 0.3);
-            transform: translateY(-3px) scale(1.05);
-        }
-
-        .hero-cta.secondary {
-            border-color: var(--text-secondary);
-            color: var(--text-secondary);
-            background: transparent;
-        }
-
-        .hero-cta.secondary:hover {
-            background: var(--text-secondary);
-            color: var(--bg-primary);
-            border-color: var(--text-secondary);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .nav-top {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            z-index: 100;
-            pointer-events: auto;
-        }
-
-        .nav-top a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: 600;
-            transition: color 200ms ease;
-        }
-
-        .nav-top a:hover {
-            color: var(--accent-primary);
-        }
-
-        .theme-switcher {
+        .ui-panel {
             position: fixed;
             top: 2rem;
             right: 2rem;
-            z-index: 10000;
-            background: rgba(10, 26, 48, 0.9);
+            z-index: 100;
+            background: rgba(5, 15, 32, 0.95);
             border: 1px solid rgba(192, 192, 192, 0.2);
             border-radius: 8px;
-            padding: 1rem;
+            padding: 1.5rem;
             backdrop-filter: blur(10px);
-            min-width: 200px;
+            max-height: 90vh;
+            overflow-y: auto;
+            min-width: 280px;
         }
 
-        .theme-switcher label {
-            font-size: 0.75rem;
+        .ui-panel h3 {
+            font-size: 1rem;
             font-weight: 700;
+            margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--text-secondary);
-            display: block;
-            margin-bottom: 0.5rem;
+            color: #007BFF;
         }
 
-        .theme-switcher select {
-            width: 100%;
-            background: var(--accent-deep);
-            color: var(--text-primary);
-            border: 1px solid var(--accent-primary);
-            padding: 0.75rem;
-            border-radius: 4px;
-            cursor: pointer;
+        .nav-back {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+            padding: 0.75rem 1.5rem;
+            background: rgba(192, 192, 192, 0.1);
+            border: 1px solid rgba(192, 192, 192, 0.3);
+            color: #A7C7E7;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 0.85rem;
             font-weight: 600;
-            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 200ms ease;
         }
 
-        .theme-switcher select:hover {
-            background: var(--accent-primary);
+        .nav-back:hover {
+            background: rgba(192, 192, 192, 0.2);
+            border-color: rgba(192, 192, 192, 0.5);
+            color: #C0C0C0;
         }
 
-        @media (max-width: 768px) {
-            .hero-tagline {
-                font-size: 1rem;
+        .info-panel {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 100;
+            background: rgba(5, 15, 32, 0.95);
+            border: 1px solid rgba(192, 192, 192, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            max-width: 320px;
+            font-size: 0.85rem;
+        }
+
+        .info-panel p {
+            margin-bottom: 0.5rem;
+            color: #A7C7E7;
+            line-height: 1.4;
+        }
+
+        .info-panel strong {
+            color: #007BFF;
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 1024px) {
+            .ui-panel {
+                top: auto;
+                right: auto;
+                bottom: 2rem;
+                left: 2rem;
+                min-width: 100%;
+                max-width: 400px;
             }
 
-            .hero-cta-group {
-                gap: 1rem;
-            }
-
-            .hero-cta {
-                padding: 1rem 2rem;
-                font-size: 0.8rem;
+            .info-panel {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- WebGL Canvas Container -->
-    <div id="canvas-container"></div>
-
-    <!-- Hero Overlay Content -->
-    <div class="hero-overlay">
-        <div class="hero-content">
-            <p class="hero-tagline">Advanced Maritime Autonomy for Defense</p>
-            <div class="hero-cta-group">
-                <button class="hero-cta">Learn Platform</button>
-                <button class="hero-cta secondary">Get In Touch</button>
-            </div>
-        </div>
-    </div>
+    <canvas id="canvas"></canvas>
 
     <!-- Navigation -->
-    <div class="nav-top">
-        <a href="material-playground.html">← Material Lab</a>
+    <a href="index.html" class="nav-back">← Back to Playground</a>
+
+    <!-- UI Panel (lil-gui will mount here) -->
+    <div class="ui-panel" id="ui-container"></div>
+
+    <!-- Info Panel -->
+    <div class="info-panel">
+        <p><strong>Hero C: Dimensional Type</strong></p>
+        <p>3D "DINA DYNAMICS" typography with real TextGeometry, beveled edges, and glitter material.</p>
+        <p><strong>Features:</strong> FontLoader, TextGeometry, PBR material, responsive rotation, cinematic lighting.</p>
     </div>
 
-    <!-- Theme Switcher -->
-    <div class="theme-switcher">
-        <label for="theme-switcher">Theme</label>
-        <select id="theme-switcher">
-            <option value="electric-cobalt" selected>Electric Cobalt</option>
-            <option value="imperial-sapphire">Imperial Sapphire</option>
-            <option value="arctic-steel">Arctic Steel</option>
-            <option value="deep-atlantic">Deep Atlantic</option>
-            <option value="midnight-titanium">Midnight Titanium</option>
-        </select>
-    </div>
+    <!-- Three.js and Dependencies -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://esm.sh/three@r170",
+        "three/addons/": "https://esm.sh/three@r170/examples/jsm/",
+        "lil-gui": "https://esm.sh/lil-gui@0.20.0"
+      }
+    }
+    </script>
 
-    <!-- Three.js and Scripts -->
+    <!-- Main Application -->
     <script type="module">
-        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@r128/build/three.module.js';
-        import { applyTheme, getCurrentTheme, hexToRGBNormalized } from './theme-config.js';
+        import * as THREE from 'three';
+        import { GUI } from 'lil-gui';
+        import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+        import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+        import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+        import { PMREMGenerator } from 'three';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-        // Apply default theme
-        applyTheme('electric-cobalt');
+        const config = {
+            theme: 'electric-cobalt',
+            metalness: 1.0,
+            roughness: 0.1,
+            clearcoat: 0.95,
+            clearcoatRoughness: 0.05,
+            autoRotate: false,
+            rotationSpeed: 0.3,
+            bloomIntensity: 1.5,
+            bloomThreshold: 0.85,
+            bloomScale: 0.4
+        };
 
-        /**
-         * Hero C: Dimensional Typography
-         * 3D text "DINA DYNAMICS" with glitter material and dramatic lighting
-         */
-        class DimensionalTypeHero {
-            constructor() {
-                this.scene = new THREE.Scene();
-                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                this.camera.position.set(0, 0, 8);
+        const canvas = document.getElementById('canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, canvas });
 
-                this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-                this.renderer.setSize(window.innerWidth, window.innerHeight);
-                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-                document.getElementById('canvas-container').appendChild(this.renderer.domElement);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
-                this.updateSceneColors();
-                this.setupLighting();
-                this.createTextGeometry();
-                this.setupEventListeners();
+        camera.position.set(0, 0, 8);
+        scene.background = new THREE.Color('#050F20');
 
-                this.mouseX = 0;
-                this.mouseY = 0;
-                this.time = 0;
+        // Environment
+        const pmremGenerator = new PMREMGenerator(renderer);
+        const environment = new RoomEnvironment();
+        const envMap = pmremGenerator.fromScene(environment).texture;
+        scene.environment = envMap;
 
-                this.animate();
+        // Lighting - 5-point setup
+        const keyLight = new THREE.DirectionalLight(0xFFFFFF, 2.0);
+        keyLight.position.set(5, 10, 7);
+        scene.add(keyLight);
+
+        const fillLight = new THREE.DirectionalLight(0x70B9FF, 1.0);
+        fillLight.position.set(-5, 5, -5);
+        scene.add(fillLight);
+
+        const ambientLight = new THREE.AmbientLight(0x1a2a4a, 0.3);
+        scene.add(ambientLight);
+
+        const rimLight = new THREE.PointLight(0x007BFF, 1.5);
+        rimLight.position.set(0, 0, 10);
+        scene.add(rimLight);
+
+        // Text
+        let textMesh = null;
+        const fontLoader = new FontLoader();
+        const fontUrl = 'https://cdn.jsdelivr.net/npm/three@r170/examples/fonts/helvetiker_bold.typeface.json';
+
+        fontLoader.load(fontUrl, (font) => {
+            const geometry = new TextGeometry('DINA DYNAMICS', {
+                font: font,
+                size: 1.0,
+                height: 0.3,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.08,
+                bevelSize: 0.04,
+                bevelSegments: 3
+            });
+
+            geometry.center();
+
+            const material = new THREE.MeshPhysicalMaterial({
+                color: '#C0C0C0',
+                metalness: config.metalness,
+                roughness: config.roughness,
+                clearcoat: config.clearcoat,
+                clearcoatRoughness: config.clearcoatRoughness,
+                envMapIntensity: 1.5,
+                emissive: '#007BFF',
+                emissiveIntensity: 0.15
+            });
+
+            textMesh = new THREE.Mesh(geometry, material);
+            scene.add(textMesh);
+        });
+
+        // Mouse tracking
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        // Post-processing
+        const composer = new EffectComposer(renderer);
+        const renderPass = new RenderPass(scene, camera);
+        composer.addPass(renderPass);
+
+        const bloomPass = new UnrealBloomPass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight),
+            config.bloomIntensity,
+            config.bloomScale,
+            config.bloomThreshold
+        );
+        composer.addPass(bloomPass);
+
+        // GUI
+        const gui = new GUI({ container: document.getElementById('ui-container') });
+        gui.title('Hero C: Dimensional Type');
+
+        const matFolder = gui.addFolder('Material Properties');
+        matFolder.add(config, 'metalness', 0, 1, 0.01).onChange((v) => {
+            if (textMesh && textMesh.material) textMesh.material.metalness = v;
+        });
+        matFolder.add(config, 'roughness', 0, 1, 0.01).onChange((v) => {
+            if (textMesh && textMesh.material) textMesh.material.roughness = v;
+        });
+        matFolder.add(config, 'clearcoat', 0, 1, 0.01).onChange((v) => {
+            if (textMesh && textMesh.material) textMesh.material.clearcoat = v;
+        });
+        matFolder.add(config, 'clearcoatRoughness', 0, 1, 0.01).onChange((v) => {
+            if (textMesh && textMesh.material) textMesh.material.clearcoatRoughness = v;
+        });
+
+        const controlFolder = gui.addFolder('Animation');
+        controlFolder.add(config, 'autoRotate');
+        controlFolder.add(config, 'rotationSpeed', 0, 2, 0.1);
+
+        const bloomFolder = gui.addFolder('Post-Processing');
+        bloomFolder.add(config, 'bloomIntensity', 0, 5, 0.1).onChange((v) => {
+            bloomPass.strength = v;
+        });
+        bloomFolder.add(config, 'bloomThreshold', 0, 1, 0.05).onChange((v) => {
+            bloomPass.threshold = v;
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            if (composer) composer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (textMesh) {
+                // Mouse-responsive rotation
+                textMesh.rotation.x = mouseY * 0.3;
+                textMesh.rotation.y = mouseX * 0.3;
+
+                // Auto rotation
+                if (config.autoRotate) {
+                    textMesh.rotation.y += config.rotationSpeed * 0.01;
+                }
+
+                // Gentle bob
+                textMesh.position.y = Math.sin(Date.now() * 0.0005) * 0.2;
             }
 
-            updateSceneColors() {
-                const theme = getCurrentTheme();
-                this.scene.background = new THREE.Color(theme.darkBg);
-            }
-
-            setupLighting() {
-                // Key light - dramatic angle
-                const keyLight = new THREE.DirectionalLight(0xFFFFFF, 1.6);
-                keyLight.position.set(15, 20, 15);
-                this.scene.add(keyLight);
-
-                // Fill light - accent color
-                const fillLight = new THREE.DirectionalLight(0x007BFF, 0.8);
-                fillLight.position.set(-15, -10, -15);
-                this.scene.add(fillLight);
-
-                // Rim light - blue glow
-                const rimLight = new THREE.DirectionalLight(0x70B9FF, 0.9);
-                rimLight.position.set(0, 0, 20);
-                this.scene.add(rimLight);
-
-                // Ambient
-                const ambientLight = new THREE.AmbientLight(0x1a2a4a, 0.4);
-                this.scene.add(ambientLight);
-
-                // Point light for extra glitter response
-                const pointLight = new THREE.PointLight(0x007BFF, 1.2);
-                pointLight.position.set(10, 10, 10);
-                this.scene.add(pointLight);
-            }
-
-            createTextGeometry() {
-                // Create canvas-based text since we don't have a font file
-                const canvas = document.createElement('canvas');
-                canvas.width = 2048;
-                canvas.height = 512;
-                const ctx = canvas.getContext('2d');
-
-                // Fill with theme color
-                ctx.fillStyle = getCurrentTheme().darkBg;
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Draw text
-                ctx.fillStyle = getCurrentTheme().silver;
-                ctx.font = 'bold 320px Arial, sans-serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText('DINA', canvas.width / 2 - 300, canvas.height / 2);
-                ctx.fillText('DYNAMICS', canvas.width / 2 + 300, canvas.height / 2);
-
-                const texture = new THREE.CanvasTexture(canvas);
-                texture.magFilter = THREE.LinearFilter;
-                texture.minFilter = THREE.LinearMipmapLinearFilter;
-
-                // Create plane with text
-                const geometry = new THREE.PlaneGeometry(16, 4, 32, 32);
-
-                const material = new THREE.MeshStandardMaterial({
-                    map: texture,
-                    color: new THREE.Color(getCurrentTheme().silver),
-                    metalness: 1.0,
-                    roughness: 0.08,
-                    emissive: new THREE.Color(getCurrentTheme().accentPrimary),
-                    emissiveIntensity: 0.3,
-                    envMapIntensity: 1.5,
-                    side: THREE.DoubleSide
-                });
-
-                this.textMesh = new THREE.Mesh(geometry, material);
-                this.textMesh.castShadow = true;
-                this.textMesh.receiveShadow = true;
-                this.textMesh.userData.baseRotation = { x: 0, y: 0, z: 0 };
-
-                // Add beveled edge geometry for depth
-                this.createBeveledEdges();
-
-                this.scene.add(this.textMesh);
-            }
-
-            createBeveledEdges() {
-                // Create subtle beveled edges using small planes
-                const edgeGeometry = new THREE.BoxGeometry(16, 4, 0.2, 16, 4, 1);
-                const edgeMaterial = new THREE.MeshStandardMaterial({
-                    color: new THREE.Color(getCurrentTheme().silver),
-                    metalness: 0.95,
-                    roughness: 0.15,
-                    emissive: new THREE.Color(getCurrentTheme().accentPrimary),
-                    emissiveIntensity: 0.2
-                });
-
-                const edges = new THREE.Mesh(edgeGeometry, edgeMaterial);
-                edges.position.z = 0.15;
-                this.scene.add(edges);
-            }
-
-            setupEventListeners() {
-                document.addEventListener('mousemove', (e) => {
-                    this.mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-                    this.mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-                });
-
-                window.addEventListener('resize', () => this.onWindowResize());
-
-                document.getElementById('theme-switcher').addEventListener('change', (e) => {
-                    applyTheme(e.target.value);
-                    this.updateSceneColors();
-                });
-            }
-
-            onWindowResize() {
-                this.camera.aspect = window.innerWidth / window.innerHeight;
-                this.camera.updateProjectionMatrix();
-                this.renderer.setSize(window.innerWidth, window.innerHeight);
-            }
-
-            animate = () => {
-                requestAnimationFrame(this.animate);
-                this.time += 0.016;
-
-                // Responsive rotation based on mouse
-                this.textMesh.rotation.x = this.mouseY * 0.5;
-                this.textMesh.rotation.y = this.mouseX * 0.8;
-
-                // Gentle continuous rotation
-                this.textMesh.rotation.z += 0.0003;
-
-                // Subtle bob effect
-                this.textMesh.position.y = Math.sin(this.time * 0.5) * 0.3;
-
-                this.renderer.render(this.scene, this.camera);
-            };
+            composer.render();
         }
 
-        // Initialize
-        const hero = new DimensionalTypeHero();
+        animate();
     </script>
 </body>
 </html>

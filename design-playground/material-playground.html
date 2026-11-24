@@ -4,167 +4,582 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Material Playground — Dina Dynamics</title>
-    <link rel="stylesheet" href="playground-foundation.css">
     <style>
-        /* Additional playground-specific styles */
-        body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #050F20;
+            color: #FFFFFF;
             overflow: hidden;
         }
 
-        #canvas-container {
+        #canvas {
+            display: block;
             width: 100%;
-            height: 100vh;
+            height: 100%;
         }
 
-        .theme-switcher {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            min-width: 220px;
+        .ui-panel {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 100;
+            background: rgba(5, 15, 32, 0.95);
+            border: 1px solid rgba(192, 192, 192, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            max-height: 90vh;
+            overflow-y: auto;
+            min-width: 280px;
         }
 
-        .theme-switcher label {
-            font-size: 0.85rem;
-            font-weight: 600;
+        .ui-panel h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--text-secondary);
-            display: block;
-            margin-bottom: 0.5rem;
+            color: #007BFF;
         }
 
-        .theme-switcher select {
-            width: 100%;
+        /* lil-gui styling */
+        :root {
+            --lil-gui-bg: rgba(10, 26, 48, 0.9);
+            --lil-gui-border: rgba(192, 192, 192, 0.2);
+            --lil-gui-text: #FFFFFF;
+            --lil-gui-active: #007BFF;
         }
 
-        .preset-selector {
-            border-top: 1px solid var(--border-subtle);
-            padding-top: 1rem;
-            margin-top: 1rem;
+        .lil-gui {
+            --bg-primary: var(--lil-gui-bg);
+            --bg-secondary: rgba(20, 36, 58, 0.9);
+            --border-color: var(--lil-gui-border);
+            --text-color: var(--lil-gui-text);
+            --widget-height: 28px;
+            --padding: 8px;
+        }
+
+        .lil-gui .controller {
+            margin: 8px 0;
+        }
+
+        .lil-gui input[type="number"],
+        .lil-gui input[type="text"],
+        .lil-gui select {
+            background: rgba(0, 71, 171, 0.2);
+            border: 1px solid var(--lil-gui-active);
+            color: var(--lil-gui-text);
+            border-radius: 2px;
+            padding: 4px 8px;
+        }
+
+        .lil-gui input[type="number"]:hover,
+        .lil-gui select:hover {
+            background: rgba(0, 71, 171, 0.3);
+        }
+
+        .lil-gui .title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--lil-gui-active);
+            padding: 8px;
+            cursor: pointer;
         }
 
         .info-panel {
             position: fixed;
             bottom: 2rem;
             left: 2rem;
-            background: var(--surface-primary);
-            border: 1px solid var(--border-subtle);
+            z-index: 100;
+            background: rgba(5, 15, 32, 0.95);
+            border: 1px solid rgba(192, 192, 192, 0.2);
             border-radius: 8px;
             padding: 1.5rem;
-            max-width: 300px;
             backdrop-filter: blur(10px);
-            font-size: 0.9rem;
+            max-width: 320px;
+            font-size: 0.85rem;
         }
 
-        .info-panel h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: var(--accent-primary);
+        .info-panel p {
+            margin-bottom: 0.5rem;
+            color: #A7C7E7;
+            line-height: 1.4;
         }
 
-        .info-item {
-            margin-bottom: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.8rem;
+        .info-panel strong {
+            color: #007BFF;
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        @media (max-width: 768px) {
-            .theme-switcher {
-                min-width: auto;
-                width: auto;
+        .nav-back {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+            padding: 0.75rem 1.5rem;
+            background: rgba(192, 192, 192, 0.1);
+            border: 1px solid rgba(192, 192, 192, 0.3);
+            color: #A7C7E7;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 200ms ease;
+        }
+
+        .nav-back:hover {
+            background: rgba(192, 192, 192, 0.2);
+            border-color: rgba(192, 192, 192, 0.5);
+            color: #C0C0C0;
+        }
+
+        @media (max-width: 1024px) {
+            .ui-panel {
+                top: auto;
+                right: auto;
+                bottom: 2rem;
+                left: 2rem;
+                min-width: 100%;
+                max-width: 400px;
             }
 
             .info-panel {
-                bottom: 1rem;
-                left: 1rem;
-                max-width: 250px;
-                padding: 1rem;
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .ui-panel {
+                max-height: 60vh;
+                min-width: 100%;
+            }
+
+            .nav-back {
+                font-size: 0.75rem;
+                padding: 0.5rem 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- WebGL Canvas Container -->
-    <div id="canvas-container"></div>
+    <canvas id="canvas"></canvas>
 
-    <!-- Theme & Material Switcher -->
-    <div class="theme-switcher">
-        <div>
-            <label for="theme-switcher">Color Palette</label>
-            <select id="theme-switcher">
-                <option value="electric-cobalt">Electric Cobalt (Default)</option>
-                <option value="imperial-sapphire">Imperial Sapphire</option>
-                <option value="arctic-steel">Arctic Steel</option>
-                <option value="deep-atlantic">Deep Atlantic</option>
-                <option value="midnight-titanium">Midnight Titanium</option>
-            </select>
-        </div>
+    <!-- Navigation -->
+    <a href="index.html" class="nav-back">← Back to Playground</a>
 
-        <div class="preset-selector">
-            <label for="preset-switcher">Glitter Material</label>
-            <select id="preset-switcher">
-                <option value="silver-chunky">Silver Chunky Glitter</option>
-                <option value="silver-fine">Silver Fine Glitter</option>
-                <option value="silver-mixed">Silver Mixed Glitter</option>
-                <option value="cobalt-glitter">Cobalt Glitter</option>
-                <option value="polished-metal">Polished Metal</option>
-            </select>
-        </div>
-    </div>
+    <!-- UI Panel (lil-gui will mount here) -->
+    <div class="ui-panel" id="ui-container"></div>
 
     <!-- Info Panel -->
     <div class="info-panel">
-        <h3>Material Playground</h3>
-        <div class="info-item">
-            <div class="info-label">Controls</div>
-            <p>Use dropdowns to explore different palettes and glitter materials. Watch the 3D sphere respond to lighting and material properties.</p>
-        </div>
-        <div class="info-item">
-            <div class="info-label">Theme</div>
-            <p id="theme-name">Electric Cobalt</p>
-        </div>
-        <div class="info-item">
-            <div class="info-label">Material</div>
-            <p id="material-name">Silver Chunky Glitter</p>
-        </div>
+        <p><strong>Material Playground</strong></p>
+        <p>Use the controls to adjust glitter properties, metallic finish, lighting, and animation in real-time.</p>
+        <p><strong>Current Theme:</strong> <span id="theme-name">Electric Cobalt</span></p>
+        <p><strong>Current Material:</strong> <span id="material-name">Silver Chunky Glitter</span></p>
+        <p><strong>Keyboard:</strong> Click and drag to rotate. Scroll to zoom. Spacebar to toggle animation.</p>
     </div>
 
-    <!-- Three.js Library -->
-    <script type="module" src="js/playground.js"></script>
-    
-    <!-- Theme Configuration (global) -->
+    <!-- Three.js and Dependencies (using esm.sh CDN) -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://esm.sh/three@r170",
+        "three/addons/": "https://esm.sh/three@r170/examples/jsm/",
+        "lil-gui": "https://esm.sh/lil-gui@0.20.0"
+      }
+    }
+    </script>
+
+    <!-- Main Application -->
     <script type="module">
-        import { applyTheme, THEMES } from './theme-config.js';
-        
-        // Apply default theme on load
-        applyTheme('electric-cobalt');
-        
-        // Update info panel on theme change
-        document.getElementById('theme-switcher').addEventListener('change', (e) => {
-            const themeName = e.target.value;
-            const theme = THEMES[themeName];
-            document.getElementById('theme-name').textContent = theme.name;
+        import * as THREE from 'three';
+        import { GUI } from 'lil-gui';
+        import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+        import { PMREMGenerator } from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+        import { THEMES, MATERIAL_PRESETS, getCurrentTheme, setCurrentTheme, hexToRGB } from './js/theme-config.js';
+
+        // ============================================================================
+        // CONFIGURATION
+        // ============================================================================
+
+        const config = {
+            theme: 'electric-cobalt',
+            material: 'silver-chunky',
+            
+            // Material properties
+            metalness: 1.0,
+            roughness: 0.15,
+            clearcoat: 0.9,
+            clearcoatRoughness: 0.1,
+            
+            // Glitter parameters
+            flakeDensity: 0.75,
+            flakeSize: 0.15,
+            flakeChunkiness: 0.4,
+            sparkleIntensity: 2.0,
+            
+            // Lighting
+            lightIntensity: 1.5,
+            ambientIntensity: 0.4,
+            lightRotation: 0,
+            
+            // Camera & parallax
+            cameraDistance: 5,
+            parallaxIntensity: 0.5,
+            
+            // Animation
+            autoRotate: true,
+            rotationSpeed: 0.5,
+            animationPause: false,
+            
+            // Post-processing
+            bloomIntensity: 1.5,
+            bloomThreshold: 0.8,
+            bloomScale: 0.5,
+            
+            // Export
+            exportSettings: () => {
+                const data = {
+                    theme: config.theme,
+                    material: config.material,
+                    ...MATERIAL_PRESETS[config.material],
+                    lighting: {
+                        intensity: config.lightIntensity,
+                        ambient: config.ambientIntensity,
+                        rotation: config.lightRotation
+                    },
+                    camera: {
+                        distance: config.cameraDistance,
+                        parallax: config.parallaxIntensity
+                    },
+                    animation: {
+                        autoRotate: config.autoRotate,
+                        speed: config.rotationSpeed
+                    },
+                    bloom: {
+                        intensity: config.bloomIntensity,
+                        threshold: config.bloomThreshold,
+                        scale: config.bloomScale
+                    }
+                };
+                const json = JSON.stringify(data, null, 2);
+                console.log(json);
+                console.log('Settings exported to console. Copy the JSON above.');
+                downloadJSON(json, `dina-material-${config.material}-${Date.now()}.json`);
+            }
+        };
+
+        // ============================================================================
+        // SCENE SETUP
+        // ============================================================================
+
+        const canvas = document.getElementById('canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, canvas });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.0;
+
+        camera.position.set(0, 0, config.cameraDistance);
+
+        // ============================================================================
+        // ENVIRONMENT & LIGHTING
+        // ============================================================================
+
+        const pmremGenerator = new PMREMGenerator(renderer);
+        const environment = new RoomEnvironment();
+        const envMap = pmremGenerator.fromScene(environment).texture;
+
+        scene.environment = envMap;
+        scene.background = new THREE.Color(THEMES[config.theme].darkBg);
+
+        // Lighting
+        const keyLight = new THREE.DirectionalLight(0xFFFFFF, 1.5);
+        keyLight.position.set(5, 10, 7);
+        keyLight.castShadow = true;
+        scene.add(keyLight);
+
+        const fillLight = new THREE.DirectionalLight(0x70B9FF, 0.6);
+        fillLight.position.set(-5, 5, -5);
+        scene.add(fillLight);
+
+        const ambientLight = new THREE.AmbientLight(0x1a2a4a, 0.4);
+        scene.add(ambientLight);
+
+        const rimLight = new THREE.PointLight(0x007BFF, 1.2);
+        rimLight.position.set(0, 0, 10);
+        scene.add(rimLight);
+
+        // ============================================================================
+        // MATERIAL SYSTEM
+        // ============================================================================
+
+        function createMaterial(presetId) {
+            const preset = MATERIAL_PRESETS[presetId];
+            const theme = THEMES[config.theme];
+            const baseColor = new THREE.Color(preset.baseColor);
+
+            const material = new THREE.MeshPhysicalMaterial({
+                color: baseColor,
+                metalness: preset.metalness,
+                roughness: preset.roughness,
+                clearcoat: preset.clearcoat,
+                clearcoatRoughness: preset.clearcoatRoughness,
+                envMapIntensity: 1.5,
+                emissive: new THREE.Color(theme.accentPrimary),
+                emissiveIntensity: 0.1,
+                side: THREE.FrontSide
+            });
+
+            return material;
+        }
+
+        // ============================================================================
+        // 3D GEOMETRY
+        // ============================================================================
+
+        let mesh;
+        function createMesh() {
+            if (mesh) scene.remove(mesh);
+
+            const geometry = new THREE.SphereGeometry(2, 128, 128);
+            const material = createMaterial(config.material);
+            mesh = new THREE.Mesh(geometry, material);
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            scene.add(mesh);
+
+            return mesh;
+        }
+
+        createMesh();
+
+        // ============================================================================
+        // CONTROLS
+        // ============================================================================
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.autoRotate = config.autoRotate;
+        controls.autoRotateSpeed = config.rotationSpeed;
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            if (composer) composer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        document.getElementById('preset-switcher').addEventListener('change', (e) => {
-            const presetLabels = {
-                'silver-chunky': 'Silver Chunky Glitter',
-                'silver-fine': 'Silver Fine Glitter',
-                'silver-mixed': 'Silver Mixed Glitter',
-                'cobalt-glitter': 'Cobalt Glitter',
-                'polished-metal': 'Polished Metal'
-            };
-            document.getElementById('material-name').textContent = presetLabels[e.target.value];
+        // ============================================================================
+        // POST-PROCESSING
+        // ============================================================================
+
+        const composer = new EffectComposer(renderer);
+        const renderPass = new RenderPass(scene, camera);
+        composer.addPass(renderPass);
+
+        const bloomPass = new UnrealBloomPass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight),
+            config.bloomIntensity,
+            config.bloomScale,
+            config.bloomThreshold
+        );
+        composer.addPass(bloomPass);
+
+        // ============================================================================
+        // GUI CONTROLS (lil-gui)
+        // ============================================================================
+
+        const gui = new GUI({ container: document.getElementById('ui-container') });
+        gui.title('Material Playground');
+
+        // Theme selection
+        const themeFolder = gui.addFolder('Theme & Palette');
+        const themeNames = Object.keys(THEMES).map(key => THEMES[key].name);
+        const themeIds = Object.keys(THEMES);
+        themeFolder.add(config, 'theme', themeIds).name('Color Palette').onChange((value) => {
+            setCurrentTheme(value);
+            const theme = THEMES[value];
+            scene.background.setHex(parseInt(theme.darkBg.slice(1), 16));
+            if (mesh && mesh.material) {
+                mesh.material.emissive.setHex(parseInt(theme.accentPrimary.slice(1), 16));
+            }
+            document.getElementById('theme-name').textContent = theme.name;
         });
+        themeFolder.open();
+
+        // Material presets
+        const matFolder = gui.addFolder('Material Presets');
+        const presetNames = Object.keys(MATERIAL_PRESETS).map(key => MATERIAL_PRESETS[key].name);
+        const presetIds = Object.keys(MATERIAL_PRESETS);
+        matFolder.add(config, 'material', presetIds).name('Material Type').onChange((value) => {
+            const preset = MATERIAL_PRESETS[value];
+            config.metalness = preset.metalness;
+            config.roughness = preset.roughness;
+            config.clearcoat = preset.clearcoat;
+            config.clearcoatRoughness = preset.clearcoatRoughness;
+            config.flakeDensity = preset.flakeDensity;
+            config.flakeSize = preset.flakeSize;
+            config.flakeChunkiness = preset.flakeChunkiness;
+            config.sparkleIntensity = preset.sparkleIntensity;
+
+            createMesh();
+            updateGUI();
+            document.getElementById('material-name').textContent = preset.name;
+        });
+        matFolder.open();
+
+        // Material properties
+        const propsFolder = gui.addFolder('Material Properties');
+        propsFolder.add(config, 'metalness', 0, 1, 0.01).onChange(() => {
+            if (mesh && mesh.material) mesh.material.metalness = config.metalness;
+        });
+        propsFolder.add(config, 'roughness', 0, 1, 0.01).onChange(() => {
+            if (mesh && mesh.material) mesh.material.roughness = config.roughness;
+        });
+        propsFolder.add(config, 'clearcoat', 0, 1, 0.01).onChange(() => {
+            if (mesh && mesh.material) mesh.material.clearcoat = config.clearcoat;
+        });
+        propsFolder.add(config, 'clearcoatRoughness', 0, 1, 0.01).onChange(() => {
+            if (mesh && mesh.material) mesh.material.clearcoatRoughness = config.clearcoatRoughness;
+        });
+
+        // Glitter properties
+        const glitterFolder = gui.addFolder('Glitter & Sparkle');
+        glitterFolder.add(config, 'flakeDensity', 0, 1, 0.05);
+        glitterFolder.add(config, 'flakeSize', 0.01, 0.5, 0.01);
+        glitterFolder.add(config, 'flakeChunkiness', 0, 1, 0.05);
+        glitterFolder.add(config, 'sparkleIntensity', 0, 5, 0.1);
+
+        // Lighting
+        const lightFolder = gui.addFolder('Lighting');
+        lightFolder.add(config, 'lightIntensity', 0, 3, 0.1).onChange(() => {
+            keyLight.intensity = config.lightIntensity;
+        });
+        lightFolder.add(config, 'ambientIntensity', 0, 1, 0.05).onChange(() => {
+            ambientLight.intensity = config.ambientIntensity;
+        });
+        lightFolder.add(config, 'lightRotation', 0, Math.PI * 2, 0.1);
+
+        // Camera & Parallax
+        const cameraFolder = gui.addFolder('Camera & Parallax');
+        cameraFolder.add(config, 'cameraDistance', 2, 15, 0.1).onChange(() => {
+            camera.position.z = config.cameraDistance;
+        });
+        cameraFolder.add(config, 'parallaxIntensity', 0, 1, 0.1);
+
+        // Animation
+        const animFolder = gui.addFolder('Animation');
+        animFolder.add(config, 'autoRotate').onChange(() => {
+            controls.autoRotate = config.autoRotate;
+        });
+        animFolder.add(config, 'rotationSpeed', 0, 5, 0.1).onChange(() => {
+            controls.autoRotateSpeed = config.rotationSpeed;
+        });
+
+        // Post-Processing
+        const bloomFolder = gui.addFolder('Post-Processing (Bloom)');
+        bloomFolder.add(config, 'bloomIntensity', 0, 5, 0.1).onChange(() => {
+            bloomPass.strength = config.bloomIntensity;
+        });
+        bloomFolder.add(config, 'bloomThreshold', 0, 1, 0.05).onChange(() => {
+            bloomPass.threshold = config.bloomThreshold;
+        });
+        bloomFolder.add(config, 'bloomScale', 0, 1, 0.05).onChange(() => {
+            bloomPass.scale = config.bloomScale;
+        });
+
+        // Export & Actions
+        const actionsFolder = gui.addFolder('Settings');
+        actionsFolder.add(config, 'exportSettings').name('Export as JSON');
+        actionsFolder.add({ resetAll: () => location.reload() }, 'resetAll').name('Reset All');
+
+        // Helper function to update GUI values
+        function updateGUI() {
+            gui.updateDisplay();
+        }
+
+        // ============================================================================
+        // ANIMATION LOOP
+        // ============================================================================
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (config.autoRotate && mesh) {
+                mesh.rotation.x += 0.001;
+                mesh.rotation.y += 0.002;
+            }
+
+            // Rotate lights
+            keyLight.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.0001);
+
+            // Update controls
+            controls.update();
+
+            // Render with post-processing
+            composer.render();
+        }
+
+        animate();
+
+        // ============================================================================
+        // UTILITY: JSON EXPORT
+        // ============================================================================
+
+        function downloadJSON(data, filename) {
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // ============================================================================
+        // KEYBOARD CONTROLS
+        // ============================================================================
+
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                config.autoRotate = !config.autoRotate;
+                controls.autoRotate = config.autoRotate;
+                gui.updateDisplay();
+            }
+        });
+
+        // Initial state
+        setCurrentTheme('electric-cobalt');
+        document.getElementById('theme-name').textContent = THEMES['electric-cobalt'].name;
+        document.getElementById('material-name').textContent = MATERIAL_PRESETS['silver-chunky'].name;
     </script>
 </body>
 </html>
