@@ -2885,7 +2885,7 @@ body {
     margin: 0.75rem 0 0 0;
 }
 
-.waveshift-wedge-callout {
+.dd-wedge-callout {
     background: linear-gradient(135deg, rgba(0, 102, 161, 0.08) 0%, rgba(26, 140, 190, 0.05) 100%);
     border-left: 4px solid var(--primary-blue);
     padding: 1.25rem 1.5rem;
@@ -2894,7 +2894,7 @@ body {
     clear: both;
 }
 
-.waveshift-wedge-callout p {
+.dd-wedge-callout p {
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.7;
