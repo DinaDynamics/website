@@ -1,10 +1,10 @@
-# DINA — GitHub Copilot Instructions
+# Dina Dynamics — GitHub Copilot Instructions
 
 ## 1. Project identity
 
-This repository contains the DINA company website, representing an advanced engineering, maritime robotics, autonomy and defense technology company.
+This repository contains the Dina Dynamics company website, representing an advanced engineering, maritime robotics, autonomy and defense technology company.
 
-- Brand name: DINA (not WAVESHIFT).
+- Brand name: Dina Dynamics (formerly WaveShift; never use the old name).
 - Name origin: Dinah, Genesis 34, Parshas Vayishlach; the Hebrew root relates to judgment.
 - Brand values: justice, strength, resolve, precision and protection.
 - Primary brand color: metallic silver.
@@ -44,7 +44,7 @@ Support multiple material treatments:
 - Smooth polished metal: continuous mirror-like or brushed surfaces contrasting with glitter.
 - Optional holographic accents: restrained spectral reflections where they complement the palette.
 
-Glitter can be bold, dense and visually prominent. Do not categorically prohibit chunky glitter or arts-and-crafts-inspired textures. Instead, evaluate the final effect for material realism, sharpness, quality and fit with DINA's identity.
+Glitter can be bold, dense and visually prominent. Do not categorically prohibit chunky glitter or arts-and-crafts-inspired textures. Instead, evaluate the final effect for material realism, sharpness, quality and fit with Dina Dynamics' identity.
 
 Prefer actual textured or physically based material treatments over a single CSS gradient. Explore layered photographic textures, procedural noise, instanced flakes, normal maps, roughness maps, environment reflections and shader-based specular highlights. Create convincing depth by varying particle size, orientation, reflectivity and the apparent depth beneath a glossy surface.
 
@@ -124,7 +124,7 @@ Build layouts with intentional visual hierarchy, generous but controlled spacing
 
 ### Hero sections
 
-Create a memorable first impression. Consider oversized metallic or glitter-filled DINA lettering, dramatic lighting and an interactive 3D material or object. Keep the central message and primary action clear. Avoid generic text-and-stock-image split layouts unless they genuinely serve the content.
+Create a memorable first impression. Consider oversized metallic or glitter-filled Dina Dynamics lettering, dramatic lighting and an interactive 3D material or object. Keep the central message and primary action clear. Avoid generic text-and-stock-image split layouts unless they genuinely serve the content.
 
 ### Buttons and interactive elements
 
@@ -190,7 +190,7 @@ Visual ambition must not come at the expense of usability.
 - Pause unnecessary rendering when scenes are off-screen or the tab is inactive.
 - Avoid blocking content behind a long-loading animation.
 
-Do not automatically replace the distinctive design with a generic mobile layout. Adapt materials and motion to device capability while retaining DINA's identity.
+Do not automatically replace the distinctive design with a generic mobile layout. Adapt materials and motion to device capability while retaining Dina Dynamics' identity.
 
 ## 12. Content and messaging
 
@@ -202,7 +202,7 @@ The visual identity may be extravagant and expressive; the company messaging sho
 
 When implementing or reviewing a page, ask:
 
-1. Does this feel unmistakably like DINA rather than a generic technology company?
+1. Does this feel unmistakably like Dina Dynamics rather than a generic technology company?
 2. Does the glitter resemble a real reflective material, including visible chunky flakes where appropriate?
 3. Are the metallic surfaces, geometry and lighting convincingly dimensional?
 4. Can all five blue palettes be switched centrally without editing individual components?
@@ -212,4 +212,4 @@ When implementing or reviewing a page, ask:
 
 If the answer to any of these is no, improve the implementation rather than settling for a generic aesthetic.
 
-**Design mandate:** Real glitter. Real depth. Sharp geometry. Metallic silver. Bold cobalt. A distinctive, immersive DINA experience.
+**Design mandate:** Real glitter. Real depth. Sharp geometry. Metallic silver. Bold cobalt. A distinctive, immersive Dina Dynamics experience.
