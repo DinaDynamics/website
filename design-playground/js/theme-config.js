@@ -1,9 +1,19 @@
 /**
  * Dina Dynamics — Theme & Material Configuration
- * 5 interchangeable palettes with metallic silver primary
+ * 6 interchangeable palettes with metallic silver primary
+ * Chanukah Royal is now the default
  */
 
 export const THEMES = {
+  'chanukah-royal': {
+    id: 'chanukah-royal',
+    name: 'Chanukah Royal',
+    silver: '#C0C0C0',
+    darkBg: '#050F20',
+    deepBlue: '#0038B8',
+    accentPrimary: '#0066FF',
+    accentLight: '#70B9FF'
+  },
   'electric-cobalt': {
     id: 'electric-cobalt',
     name: 'Electric Cobalt',
@@ -133,7 +143,7 @@ export function rgbToHex(r, g, b) {
 }
 
 export function getCurrentTheme() {
-  return window.__DINA_THEME || THEMES['electric-cobalt'];
+  return window.__DINA_THEME || THEMES['chanukah-royal'];
 }
 
 export function setCurrentTheme(themeName) {

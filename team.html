@@ -9,7 +9,7 @@
 <body>
     <header class="navbar">
         <div class="container">
-            <div class="logo"><span style="font-size: 28px; font-weight: 700; letter-spacing: 1px; color: #C0C0C0;">Dina Dynamics</span></div>
+            <div class="logo">Dina Dynamics</div>
             <nav class="nav-links" id="navMenu">
                 <a href="index.html">Home</a>
                 <a href="technology.html">Technology</a>
@@ -27,21 +27,46 @@
     </header>
 
     <main>
-        <!-- PAGE HEADER -->
         <section class="page-header">
             <div class="container">
                 <h1 class="page-title">Team</h1>
+                <div class="hero-divider"></div>
             </div>
         </section>
 
-        <!-- TEAM MEMBERS SECTION -->
         <section class="team-section">
             <div class="container">
                 <div class="team-description">
                     <p>A small engineering team focused on hydrodynamics, autonomy and maritime systems.</p>
                 </div>
+            </div>
+        </section>
 
+        <section class="content-section">
+            <div class="container">
+                <h2 class="section-headline">Our Focus</h2>
+                <div class="section-content">
+                    <div class="mission-box">
+                        <h3>Hydrodynamic Engineering</h3>
+                        <p>Advanced hull design, foil optimization, and performance validation in marine environments.</p>
+                    </div>
+                    <div class="mission-box">
+                        <h3>Autonomous Systems</h3>
+                        <p>Navigation, decision-making, and integration of autonomous capability with human operator oversight.</p>
+                    </div>
+                    <div class="mission-box">
+                        <h3>Maritime Integration</h3>
+                        <p>System development for defense maritime applications with focus on reliability, operational effectiveness, and tactical integration.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="section-headline">Interested in Joining?</h2>
+                <p class="cta-text">We're building an experienced team to advance autonomous maritime technology. Get in touch to explore opportunities.</p>
+                <a href="contact.html" class="btn btn-primary">Contact Us</a>
             </div>
         </section>
     </main>
@@ -51,6 +76,35 @@
             <p>&copy; 2026 Dina Dynamics. Defense Technology & Maritime Autonomy</p>
         </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.utils.toArray('.mission-box').forEach((box) => {
+                gsap.from(box, {
+                    scrollTrigger: {
+                        trigger: box,
+                        start: 'top 80%',
+                        scrub: 1
+                    },
+                    opacity: 0,
+                    y: 20
+                });
+            });
+
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', () => {
+                    navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+        });
+    </script>
 
     <script src="script.js"></script>
 </body>

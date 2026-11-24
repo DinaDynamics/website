@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Development Plan - Dina Dynamics</title>
-
+    <title>Development - Dina Dynamics</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="navbar">
         <div class="container">
-            <div class="logo"><span style="font-size: 28px; font-weight: 700; letter-spacing: 1px; color: #C0C0C0;">Dina Dynamics</span></div>
+            <div class="logo">Dina Dynamics</div>
             <nav class="nav-links" id="navMenu">
                 <a href="index.html">Home</a>
                 <a href="technology.html">Technology</a>
@@ -28,59 +27,90 @@
     </header>
 
     <main>
-        <!-- PAGE HEADER -->
         <section class="page-header">
             <div class="container">
-                <h1 class="page-title">12-Month Development Plan</h1>
-                <p class="page-subtitle">From Design to Pilot Demonstration</p>
+                <h1 class="page-title">Development Plan</h1>
+                <p class="page-subtitle">Prototype Iterations & Capability Validation</p>
+                <div class="hero-divider"></div>
             </div>
         </section>
 
-        <!-- DEVELOPMENT TIMELINE SECTION -->
-        <section class="phases-section development-timeline">
+        <section class="content-section">
             <div class="container">
-                <h2 class="section-headline">Development Prototypes</h2>
-                <p class="page-subtitle">Multiple platforms in parallel development</p>
-                <div class="phases-grid">
-                    <div class="phase-card">
-                        <div class="phase-number">Prototype 1</div>
-                        <h2 class="phase-headline">~1m Hydrofoil Demonstration Platform</h2>
-                        <p class="phase-duration">Design, Build, Validation</p>
-                        <div class="phase-content">
-                            <p>Detailed hydrodynamic design, component selection, autonomy framework, and integration testing. Validation of core platform concepts at reduced scale.</p>
-                            <div class="deliverables">
-                                <h4>Objectives:</h4>
-                                <ul>
-                                    <li>Hydrodynamic validation of T-foil geometry</li>
-                                    <li>Autonomous control system integration</li>
-                                    <li>Sensor payload integration</li>
-                                </ul>
-                            </div>
+                <h2 class="section-headline">Platform Development Roadmap</h2>
+                <p style="text-align: center; font-size: 1.1rem; color: var(--accent-light); margin-bottom: 60px;">Dina Dynamics is currently in active development of its autonomous hydrofoil platform.</p>
+
+                <div class="development-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Phase 1</div>
+                        <div class="timeline-content">
+                            <h3>Hydrodynamic Validation</h3>
+                            <p>Prototype testing of hydrofoil design, hull configuration, and power consumption characteristics. Focus on optimizing drag reduction and seakeeping performance.</p>
                         </div>
                     </div>
 
-                    <!-- PROTOTYPE 2 -->
-                    <div class="phase-card">
-                        <div class="phase-number">Prototype 2</div>
-                        <h2 class="phase-headline">Low-Cost Reconnaissance USV (V0)</h2>
-                        <p class="phase-duration">Design, Build, Demonstration</p>
-                        <div class="phase-content">
-                            <p>Scaled multirole platform optimized for autonomous operations and modular payloads. Focus on cost-effective design, operational simplicity, and integration with remote command structures.</p>
-                            <div class="deliverables">
-                                <h4>Objectives:</h4>
-                                <ul>
-                                    <li>Operational endurance validation</li>
-                                    <li>Human-in-the-loop control workflows</li>
-                                    <li>Payload modularity demonstration</li>
-                                </ul>
-                            </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Phase 2</div>
+                        <div class="timeline-content">
+                            <h3>Propulsion Integration</h3>
+                            <p>Development and integration of hybrid-electric propulsion system. Testing of diesel-electric and battery power modes under various operational conditions.</p>
                         </div>
                     </div>
 
+                    <div class="timeline-item">
+                        <div class="timeline-date">Phase 3</div>
+                        <div class="timeline-content">
+                            <h3>Autonomy Systems</h3>
+                            <p>Development of autonomous navigation stack, waypoint management, obstacle detection, and human operator interface. Integration of core autonomy algorithms.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">Phase 4</div>
+                        <div class="timeline-content">
+                            <h3>Sensor Integration</h3>
+                            <p>Development of modular sensor payload systems. Testing of sensor data processing, real-time transmission to operators, and integration with autonomous functions.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">Phase 5</div>
+                        <div class="timeline-content">
+                            <h3>Operational Validation</h3>
+                            <p>Field testing in realistic maritime environments. Demonstration of platform capability to defense and security organizations.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <section class="content-section mission-section-band">
+            <div class="container">
+                <h2 class="section-headline">Development Focus Areas</h2>
+                <div class="section-content">
+                    <div class="mission-box">
+                        <h3>Reliability & Durability</h3>
+                        <p>Extensive testing to ensure platform operates reliably in salt water, rough seas, and demanding maritime conditions. Redundancy in critical systems.</p>
+                    </div>
+                    <div class="mission-box">
+                        <h3>Human Operator Integration</h3>
+                        <p>Development of intuitive control interfaces and teleoperation systems. Ensuring operators can effectively monitor, direct, and intervene in platform operations.</p>
+                    </div>
+                    <div class="mission-box">
+                        <h3>Autonomous Capability</h3>
+                        <p>Building robust autonomous navigation, decision-making, and failsafe systems. Maintaining human oversight throughout all autonomous functions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="section-headline">Interested in Collaboration?</h2>
+                <p class="cta-text">We're actively seeking partners for prototype testing, capability validation, and operational integration.</p>
+                <a href="contact.html" class="btn btn-primary">Contact Us</a>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -88,6 +118,36 @@
             <p>&copy; 2026 Dina Dynamics. Defense Technology & Maritime Autonomy</p>
         </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.utils.toArray('.timeline-item').forEach((item, index) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: 'top 80%',
+                        scrub: 1
+                    },
+                    opacity: 0,
+                    x: -30,
+                    duration: 0.6
+                });
+            });
+
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', () => {
+                    navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+        });
+    </script>
 
     <script src="script.js"></script>
 </body>

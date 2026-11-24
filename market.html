@@ -9,7 +9,7 @@
 <body>
     <header class="navbar">
         <div class="container">
-            <div class="logo"><span style="font-size: 28px; font-weight: 700; letter-spacing: 1px; color: #C0C0C0;">Dina Dynamics</span></div>
+            <div class="logo">Dina Dynamics</div>
             <nav class="nav-links" id="navMenu">
                 <a href="index.html">Home</a>
                 <a href="technology.html">Technology</a>
@@ -27,7 +27,6 @@
     </header>
 
     <main>
-        <!-- PAGE HEADER -->
         <section class="page-header market-hero">
             <div class="container">
                 <h1 class="page-title">Market Opportunity</h1>
@@ -36,7 +35,6 @@
             </div>
         </section>
 
-        <!-- THE MARKET IN ONE LINE -->
         <section class="content-section">
             <div class="container">
                 <h2 class="section-headline">The Market in One Line</h2>
@@ -48,8 +46,7 @@
             </div>
         </section>
 
-        <!-- WHY THIS MARKET IS REAL -->
-        <section class="content-section" id="why-market-real">
+        <section class="content-section">
             <div class="container">
                 <h2 class="section-headline">Why This Market Is Real</h2>
                 
@@ -79,7 +76,6 @@
             </div>
         </section>
 
-        <!-- DEFENSE CUSTOMERS & APPLICATIONS -->
         <section class="content-section">
             <div class="container">
                 <h2 class="section-headline">Potential Customer Segments</h2>
@@ -101,8 +97,6 @@
                         </div>
                     </div>
                     
-                    <div style="clear: both;"></div>
-                    
                     <div class="buyer-reality-callout">
                         <p><strong>Buyer reality:</strong> Early adoption requires demonstrated capability and operational validation. Pilots that prove reliability, range, and integration with existing systems will drive adoption pathways.</p>
                     </div>
@@ -110,7 +104,6 @@
             </div>
         </section>
 
-        <!-- MISSION SCENARIOS -->
         <section class="content-section mission-section-band">
             <div class="container">
                 <h2 class="section-headline">Intended Applications</h2>
@@ -131,18 +124,16 @@
             </div>
         </section>
 
-        <!-- MARKET SIZE -->
         <section class="content-section market-size-section">
             <div class="container">
                 <h2 class="section-headline">Market Context</h2>
                 <div class="section-content">
-                    <p>Spending is driven by operational necessity and strategic doctrine evolution, with multi-year procurement commitments from established defense budgets.</p>
+                    <p>Global defense spending on autonomous and unmanned maritime systems is driven by operational necessity and strategic doctrine evolution, with multi-year procurement commitments from established defense budgets.</p>
                     <p>Dina Dynamics targets early-stage pilots with defense-adjacent organizations to validate platform capability and operational workflow integration, with expansion to larger defense procurement cycles as demonstrated performance builds confidence.</p>
                 </div>
             </div>
         </section>
 
-        <!-- COMPETITIVE LANDSCAPE -->
         <section class="content-section">
             <div class="container">
                 <h2 class="section-headline">Competitive Landscape</h2>
@@ -170,7 +161,6 @@
             </div>
         </section>
 
-        <!-- MARKET SUMMARY -->
         <section class="content-section">
             <div class="container">
                 <h2 class="section-headline">Market Summary</h2>
@@ -186,8 +176,6 @@
                 </div>
             </div>
         </section>
-
-
     </main>
 
     <footer class="footer">
@@ -195,6 +183,35 @@
             <p>&copy; 2026 Dina Dynamics. Defense Technology & Maritime Autonomy</p>
         </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.utils.toArray('.why-market-card, .buyer-tile').forEach((item) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: 'top 80%',
+                        scrub: 1
+                    },
+                    opacity: 0,
+                    y: 20
+                });
+            });
+
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', () => {
+                    navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+                });
+            }
+        });
+    </script>
 
     <script src="script.js"></script>
 </body>
