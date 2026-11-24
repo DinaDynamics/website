@@ -4,7 +4,7 @@
 
 This repository contains the Dina Dynamics company website, representing an advanced engineering, maritime robotics, autonomy and defense technology company.
 
-- Brand name: Dina Dynamics (formerly WaveShift; never use the old name).
+- Brand name: Dina Dynamics.
 - Name origin: Dinah, Genesis 34, Parshas Vayishlach; the Hebrew root relates to judgment.
 - Brand values: justice, strength, resolve, precision and protection.
 - Primary brand color: metallic silver.
