@@ -1,432 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="electric-cobalt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dina Dynamics - Defense Technology & Maritime Autonomy</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Glitter effect for DINA text */
-        @keyframes glitter-sparkle {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-        
-        .glitter-layer {
-            position: absolute;
-            pointer-events: none;
-        }
-        
-        .spark {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: radial-gradient(circle, #FFFFFF 0%, rgba(192, 192, 192, 0.5) 100%);
-            border-radius: 50%;
-            filter: drop-shadow(0 0 2px rgba(192, 192, 192, 0.8));
-            animation: glitter-sparkle 2s infinite;
-        }
-
-        /* Parallax sections */
-        [data-parallax] {
-            position: relative;
-        }
-
-        /* 3D perspective */
-        .perspective {
-            perspective: 1000px;
-        }
-
-        /* Liquid metal canvas */
-        #hero-liquid-canvas {
-            display: block;
-            width: 100%;
-            max-width: 400px;
-            height: 400px;
-            margin: 0 auto;
-        }
-
-        /* Section reveal animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Hero logo wrapper */
-        .hero-logo-wrapper {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 60px;
-            min-height: 300px;
-            perspective: 1200px;
-        }
-
-        .hero-logo-inner {
-            position: relative;
-            text-align: center;
-        }
-
-        /* Glitter overlay for text */
-        .glitter-text {
-            position: relative;
-            display: inline-block;
-        }
-
-        .glitter-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            border-radius: 2px;
-        }
-
-        .glitter-particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            filter: drop-shadow(0 0 2px rgba(192, 192, 192, 0.8));
-        }
-
-        /* Smooth transitions */
-        section {
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        /* Interactive cursor glow */
-        .cursor-glow {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            border: 2px solid rgba(0, 102, 255, 0.5);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            display: none;
-            filter: drop-shadow(0 0 10px rgba(0, 102, 255, 0.4));
-        }
-
-        body.show-cursor .cursor-glow {
-            display: block;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#050F20">
+    <meta name="description" content="Dina Dynamics is developing an autonomous hydrofoil platform for maritime operations.">
+    <title>Dina Dynamics | Maritime Autonomy</title>
+    <link rel="preload" href="assets/ocean-wave-poster.jpg" as="image">
+    <link rel="stylesheet" href="homepage.css">
 </head>
 <body>
-    <!-- Cursor glow effect -->
-    <div class="cursor-glow"></div>
-
-    <!-- Navigation -->
-    <header class="navbar">
-        <div class="container">
-            <div class="logo">Dina Dynamics</div>
-            <nav class="nav-links" id="navMenu">
-                <a href="index.html" class="active">Home</a>
-                <a href="technology.html">Technology</a>
-                <a href="development.html">Development</a>
-                <a href="market.html">Market</a>
-                <a href="team.html">Team</a>
-                <a href="contact.html">Contact</a>
-            </nav>
-            <button class="menu-toggle active" id="menuToggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+        <a class="site-mark" href="index.html" aria-label="Dina Dynamics home"><span class="mark-symbol" aria-hidden="true">D<span>›</span></span><span>DINA<br>DYNAMICS</span></a>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+            <a href="index.html" aria-current="page">Home</a>
+            <a href="technology.html">Technology</a>
+            <a href="development.html">Development</a>
+            <a href="market.html">Market</a>
+            <a href="team.html">Team</a>
+            <a class="nav-contact" href="contact.html">Contact <span aria-hidden="true">↗</span></a>
+        </nav>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span class="sr-only">Toggle navigation</span></button>
     </header>
-
-    <main>
-        <!-- HERO SECTION -->
-        <section class="hero" data-parallax>
-            <div class="hero-bg"></div>
-            
-            <div class="hero-content">
-                <!-- DINA / DYNAMICS Logo -->
-                <div class="hero-logo-wrapper">
-                    <div class="hero-logo-inner">
-                        <div class="hero-dina glitter-text">
-                            DINA
-                            <div class="glitter-overlay" id="dinGlitter"></div>
-                        </div>
-                        <div class="hero-dynamics">DYNAMICS</div>
-                    </div>
-                </div>
-
-                <h1 class="hero-headline">Advanced Maritime Autonomy for Defense & Security</h1>
-                <p class="hero-subheadline">Autonomous hydrofoil platform with integrated sensor payloads, designed for persistent maritime operations and remote operator oversight in demanding environments.</p>
-                
-                <div class="hero-buttons">
-                    <a href="development.html" class="btn btn-primary">View Development Plan</a>
-                    <a href="contact.html" class="btn btn-secondary">Contact</a>
-                </div>
+    <main id="main">
+        <section class="ocean-hero" aria-labelledby="hero-title">
+            <div class="hero-media" aria-hidden="true">
+                <video class="ocean-video" muted loop playsinline preload="none" poster="assets/ocean-wave-poster.jpg" data-src="assets/ocean-wave.mp4"></video>
+                <div class="ocean-tint"></div>
+            </div>
+            <div class="hero-topline"><span>DEFENSE TECHNOLOGY <i></i> MARITIME AUTONOMY</span><span>ENGINEERED FOR THE WATER</span></div>
+            <div class="hero-center">
+                <p class="hero-eyebrow"><span></span> THE FUTURE MOVES THROUGH WATER</p>
+                <h1 id="hero-title" class="hero-wordmark"><span class="wordmark-dina">DINA</span><span class="wordmark-dynamics">DYNAMICS</span></h1>
+                <div class="hero-description"><span class="hero-description-line" aria-hidden="true"></span><p>Advanced maritime autonomy.<br>Engineered with purpose.</p></div>
+                <a class="hero-action" href="technology.html">EXPLORE OUR TECHNOLOGY <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="hero-bottom"><a class="scroll-cue" href="#approach"><span class="scroll-line"></span> SCROLL TO EXPLORE</a><p>PRECISION IN MOTION <span> / </span> 01</p></div>
+            <div class="hero-edge" aria-hidden="true"></div>
+        </section>
+        <section class="intro-section" id="approach">
+            <div class="section-meta"><span>01 / OUR APPROACH</span><span>MARITIME ENGINEERING &amp; AUTONOMY</span></div>
+            <div class="intro-layout">
+                <p class="section-kicker">A DIFFERENT<br>WAY FORWARD <span>↘</span></p>
+                <div class="intro-copy"><h2>Built for a<br><em>moving world.</em></h2><p>Dina Dynamics is developing an autonomous hydrofoil platform for demanding maritime environments. Bringing together hydrodynamics, propulsion and autonomy, we are exploring a new approach to operations on the water.</p><a class="text-link" href="technology.html">EXPLORE THE TECHNOLOGY <span>↗</span></a></div>
+            </div>
+            <div class="flow-lines" aria-hidden="true"><svg viewBox="0 0 1440 300" preserveAspectRatio="none"><path d="M-30 260 C350 280 450 40 800 100 S1250 250 1480 -15"/><path d="M-30 280 C350 300 470 60 800 120 S1260 270 1480 5"/><path d="M-30 300 C350 320 490 80 800 140 S1270 290 1480 25"/></svg></div>
+        </section>
+        <section class="platform-section" aria-labelledby="platform-title">
+            <div class="section-meta"><span>02 / THE PLATFORM</span><span>CONCEPT IN DEVELOPMENT</span></div>
+            <div class="platform-title"><p class="section-kicker">DESIGNED TO<br>MOVE DIFFERENTLY <span>↘</span></p><h2 id="platform-title">Above the<br><em>ordinary.</em></h2></div>
+            <figure class="platform-figure"><img src="assets/photo.png" alt="Concept rendering of the autonomous hydrofoil platform on water" loading="lazy"><figcaption><span>01 — CONCEPT RENDERING</span><span>AUTONOMOUS HYDROFOIL PLATFORM</span></figcaption></figure>
+            <div class="platform-details"><div class="platform-index">D<span>/</span>D<br><small>ENGINEERING<br>IN MOTION</small></div><div><h3>Designed from the water up.</h3><p>Our multirole hydrofoil trimaran concept brings together T-shaped foils, hybrid-electric propulsion and integrated sensor payloads, with remote operator oversight at its core.</p><a class="text-link" href="technology.html">DISCOVER OUR APPROACH <span>↗</span></a></div></div>
+        </section>
+        <section class="principles-section" aria-labelledby="principles-title">
+            <div class="section-meta"><span>03 / THE FOCUS</span><span>DEVELOPMENT IN PROGRESS</span></div>
+            <h2 id="principles-title">Precision in<br><em>every layer.</em></h2>
+            <div class="principles-list">
+                <article><span>01</span><h3>Hydrodynamics</h3><p>Validating a hydrofoil design intended to reduce power consumption and extend endurance.</p><span aria-hidden="true">↗</span></article>
+                <article><span>02</span><h3>Propulsion</h3><p>Developing and integrating a hybrid-electric propulsion architecture.</p><span aria-hidden="true">↗</span></article>
+                <article><span>03</span><h3>Autonomy</h3><p>Exploring autonomous navigation and sensor integration with human oversight.</p><span aria-hidden="true">↗</span></article>
             </div>
         </section>
-
-        <!-- SOLUTION SECTION -->
-        <section class="solution-section reveal" data-parallax>
-            <div class="container">
-                <h2 class="section-headline">Our Autonomous Hydrofoil USV</h2>
-                <div class="hero-divider"></div>
-                
-                <div class="solution-cards">
-                    <div class="solution-card reveal">
-                        <h3 class="solution-card-title">Platform</h3>
-                        <p>Multirole hydrofoil trimaran with T-shaped hydrofoils and hybrid-electric propulsion, designed for persistent maritime operations with minimal crew requirements.</p>
-                    </div>
-
-                    <div class="solution-card reveal">
-                        <h3 class="solution-card-title">Capabilities</h3>
-                        <p>Designed to operate with integrated sensor payloads and stream data to remote operators under human oversight.</p>
-                    </div>
-
-                    <div class="solution-card reveal">
-                        <h3 class="solution-card-title">Mission</h3>
-                        <p>Hydrodynamic design aims to reduce power consumption and extend endurance across coastal and near-shore operations.</p>
-                    </div>
-                </div>
-
-                <div class="solution-images">
-                    <img src="assets/photo.png" alt="Autonomous Hydrofoil USV" class="solution-image reveal">
-                    <img src="assets/photodetails.png" alt="USV System Details" class="solution-image reveal">
-                </div>
-
-                <div class="features-grid">
-                    <div class="feature-card reveal">
-                        <h3>Architecture</h3>
-                        <p>Hydrofoil trimaran with T-shaped foils and hybrid-electric propulsion</p>
-                    </div>
-                    <div class="feature-card reveal">
-                        <h3>Capabilities</h3>
-                        <p>Autonomous navigation, waypoint management, and sensor payload integration</p>
-                    </div>
-                    <div class="feature-card reveal">
-                        <h3>Oversight</h3>
-                        <p>Remote operator monitoring and intervention capability throughout missions</p>
-                    </div>
-                    <div class="feature-card reveal">
-                        <h3>Focus</h3>
-                        <p>Hydrodynamic validation, propulsion integration, and autonomy systems</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- BUSINESS HYPOTHESIS SECTION -->
-        <section class="hypothesis-section reveal" data-parallax>
-            <div class="container">
-                <h2 class="section-headline">Our Business Hypothesis</h2>
-                <div class="hypothesis-box reveal">
-                    <p class="hypothesis-text">Autonomous platforms can reduce operational costs and personnel risk in maritime environments. Our hydrodynamic design aims to reduce power consumption and extend endurance.</p>
-                    <p class="hypothesis-text">Dina Dynamics is developing and validating this platform through prototype iterations.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA SECTION -->
-        <section class="cta-section reveal" data-parallax>
-            <div class="container">
-                <h2 class="section-headline">Advancing Maritime Autonomy</h2>
-                <p class="cta-text">Dina Dynamics is currently in active development of its autonomous hydrofoil platform, with focus on hydrodynamic validation, propulsion integration, and autonomy systems.</p>
-                <a href="development.html" class="btn btn-primary">View Development Plan</a>
-            </div>
-        </section>
+        <section class="closing-section"><div class="closing-orbit" aria-hidden="true"></div><p class="section-kicker">WHAT COMES NEXT <span>↗</span></p><h2>The next wave<br><em>starts here.</em></h2><p>Follow the development of our autonomous hydrofoil platform.</p><a class="closing-link" href="development.html">VIEW DEVELOPMENT PLAN <span>↗</span></a></section>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 Dina Dynamics. Defense Technology & Maritime Autonomy</p>
-        </div>
-    </footer>
-
-    <!-- GSAP & ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.matchMedia.min.js"></script>
-
-    <!-- Three.js for 3D effects -->
-    <script type="importmap">
-    {
-      "imports": {
-        "three": "https://esm.sh/three@r170",
-        "three/addons/": "https://esm.sh/three@r170/examples/jsm/"
-      }
-    }
-    </script>
-
-    <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-        import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-        import { PMREMGenerator } from 'three/addons/pmrem/PMREMGenerator.js';
-
-        gsap.registerPlugin(ScrollTrigger);
-
-        // ===== GLITTER EFFECTS =====
-        function createGlitterEffect(elementId, particleCount = 50) {
-            const element = document.getElementById(elementId);
-            if (!element) return;
-
-            const overlay = element.querySelector('.glitter-overlay');
-            if (!overlay) return;
-
-            const rect = element.getBoundingClientRect();
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'glitter-particle';
-                
-                const x = Math.random() * rect.width;
-                const y = Math.random() * rect.height;
-                const delay = Math.random() * 2;
-                const duration = 1 + Math.random() * 1;
-                
-                particle.style.left = x + 'px';
-                particle.style.top = y + 'px';
-                particle.style.animation = `glitter-sparkle ${duration}s infinite`;
-                particle.style.animationDelay = delay + 's';
-                
-                overlay.appendChild(particle);
-            }
-        }
-
-        // Create glitter on DINA text
-        window.addEventListener('load', () => {
-            createGlitterEffect('dinGlitter', 80);
-            
-            // ===== SCROLL ANIMATIONS =====
-            const reveals = document.querySelectorAll('.reveal');
-            
-            reveals.forEach((element) => {
-                gsap.registerEffect({
-                    name: 'fadeInUp',
-                    effect: (targets) => {
-                        return gsap.to(targets, {
-                            duration: 0.8,
-                            opacity: 1,
-                            y: 0,
-                            ease: 'power2.out'
-                        });
-                    },
-                    defaults: { duration: 0.8 }
-                });
-
-                ScrollTrigger.create({
-                    trigger: element,
-                    onEnter: () => {
-                        element.classList.add('active');
-                        gsap.effects.fadeInUp(element);
-                    },
-                    markers: false
-                });
-            });
-
-            // ===== PARALLAX EFFECT =====
-            document.querySelectorAll('[data-parallax]').forEach((section) => {
-                gsap.to(section, {
-                    scrollTrigger: {
-                        trigger: section,
-                        scrub: 0.5,
-                        markers: false
-                    },
-                    y: -50,
-                    opacity: 0.95,
-                    ease: 'none'
-                });
-            });
-
-            // ===== CURSOR GLOW =====
-            const cursorGlow = document.querySelector('.cursor-glow');
-            let mouseX = 0;
-            let mouseY = 0;
-
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-
-                gsap.to(cursorGlow, {
-                    left: mouseX - 30,
-                    top: mouseY - 30,
-                    duration: 0.1,
-                    overwrite: 'auto'
-                });
-            });
-
-            // Show cursor glow on desktop
-            if (window.matchMedia('(hover: hover)').matches) {
-                document.body.classList.add('show-cursor');
-            }
-
-            // ===== BUTTON HOVER EFFECTS =====
-            document.querySelectorAll('.btn').forEach((btn) => {
-                btn.addEventListener('mouseenter', () => {
-                    gsap.to(btn, {
-                        duration: 0.3,
-                        y: -4,
-                        boxShadow: '0 0 50px rgba(0, 102, 255, 0.8)'
-                    });
-                });
-
-                btn.addEventListener('mouseleave', () => {
-                    gsap.to(btn, {
-                        duration: 0.3,
-                        y: 0
-                    });
-                });
-            });
-
-            // ===== CARD HOVER EFFECTS =====
-            document.querySelectorAll('.solution-card').forEach((card) => {
-                card.addEventListener('mouseenter', () => {
-                    gsap.to(card, {
-                        duration: 0.4,
-                        y: -12,
-                        boxShadow: '0 20px 60px rgba(0, 102, 255, 0.4)'
-                    });
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    gsap.to(card, {
-                        duration: 0.4,
-                        y: 0
-                    });
-                });
-            });
-        });
-
-        // ===== MENU TOGGLE =====
-        const menuToggle = document.getElementById('menuToggle');
-        const navMenu = document.getElementById('navMenu');
-
-        if (menuToggle) {
-            menuToggle.addEventListener('click', () => {
-                navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
-            });
-        }
-
-        // Close menu on link click
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.style.display = 'none';
-            });
-        });
-    </script>
-
-    <script src="script.js"></script>
+    <footer class="site-footer"><a class="footer-mark" href="index.html">DINA DYNAMICS</a><p>DEFENSE TECHNOLOGY &amp; MARITIME AUTONOMY</p><p>© 2026 DINA DYNAMICS</p><a href="contact.html">GET IN TOUCH ↗</a></footer>
+    <script type="module" src="homepage.js"></script>
 </body>
 </html>
