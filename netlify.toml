@@ -1,0 +1,23 @@
+# Dina Dynamics — Netlify Configuration
+
+# Build settings (plain HTML/CSS/JS, no build step needed)
+[build]
+  publish = "."
+  command = ""
+
+# Redirect rules: block access to internal and development folders
+[[redirects]]
+  from = "/internal/*"
+  to = "/.netlify/functions/not-found"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/design-playground/*"
+  to = "/.netlify/functions/not-found"
+  status = 404
+  force = true
+
+# Optional: Enable gzip compression for optimal performance
+[build.environment]
+  NODE_ENV = "production"
