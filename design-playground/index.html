@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Playground — Dina Dynamics</title>
+    <link rel="stylesheet" href="playground-foundation.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--surface-primary) 100%);
+        }
+
+        .header {
+            padding: 3rem 2rem;
+            border-bottom: 1px solid var(--border-subtle);
+            background: rgba(5, 15, 32, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header h1 {
+            margin-bottom: 0.5rem;
+            color: var(--brand-silver);
+        }
+
+        .header p {
+            color: var(--accent-light);
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        h2 {
+            color: var(--brand-silver);
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            border-bottom: 2px solid var(--border-subtle);
+            padding-bottom: 1rem;
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .experiment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .experiment-card {
+            background: rgba(10, 26, 48, 0.6);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 300ms ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experiment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
+            transition: left 500ms ease;
+        }
+
+        .experiment-card:hover::before {
+            left: 100%;
+        }
+
+        .experiment-card:hover {
+            border-color: var(--accent-primary);
+            background: rgba(10, 26, 48, 0.9);
+            box-shadow: 0 0 30px rgba(0, 123, 255, 0.2),
+                       inset 0 0 20px rgba(0, 123, 255, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .experiment-card h3 {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .experiment-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .experiment-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: rgba(0, 123, 255, 0.1);
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all 200ms ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+        }
+
+        .experiment-link:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .info-section {
+            background: rgba(10, 26, 48, 0.4);
+            border-left: 4px solid var(--accent-primary);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 2px;
+        }
+
+        .info-section h4 {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+        }
+
+        .info-section p {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .info-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .tech-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-item {
+            background: rgba(0, 123, 255, 0.1);
+            border: 1px solid var(--accent-primary);
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--accent-light);
+        }
+
+        .nav-back {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(192, 192, 192, 0.1);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all 200ms ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+        }
+
+        .nav-back:hover {
+            background: rgba(192, 192, 192, 0.2);
+            border-color: var(--brand-silver);
+            color: var(--brand-silver);
+        }
+
+        .footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .header {
+                padding: 2rem 1rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .experiment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>Design Playground</h1>
+            <p>Phase 3 — Visual Design & Experimentation</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="../index.html" class="nav-back">← Back to Site</a>
+
+        <h2>Material Experiments</h2>
+        <div class="experiment-grid">
+            <div class="experiment-card">
+                <h3>Material Playground</h3>
+                <p>Interactive 3D sphere with procedural glitter materials. Test five different glitter presets and five color palettes in real-time with responsive lighting.</p>
+                <a href="material-playground.html" class="experiment-link">Open Playground</a>
+            </div>
+        </div>
+
+        <h2>Hero Concepts</h2>
+        <div class="experiment-grid">
+            <div class="experiment-card">
+                <h3>Hero A: Liquid Metal</h3>
+                <p>Responsive morphing mesh with wave deformation. Full-screen immersive geometry that reacts to cursor movement with realistic metallic reflections.</p>
+                <a href="hero-a-liquid-metal.html" class="experiment-link">View Concept</a>
+            </div>
+
+            <div class="experiment-card">
+                <h3>Hero B: Glitter Field</h3>
+                <p>Particle-based animated field with parallax and responsive motion. 1500+ particles creating depth with mouse-influenced trajectory changes.</p>
+                <a href="hero-b-glitter-field.html" class="experiment-link">View Concept</a>
+            </div>
+
+            <div class="experiment-card">
+                <h3>Hero C: Dimensional Type</h3>
+                <p>Large 3D typography "DINA DYNAMICS" with glitter material and dramatic cinematic lighting. Responsive rotation and subtle bob animation.</p>
+                <a href="hero-c-dimensional-type.html" class="experiment-link">View Concept</a>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h4>Phase 3 Technical Stack</h4>
+            <div class="tech-list">
+                <div class="tech-item">Three.js (ES Modules)</div>
+                <div class="tech-item">WebGL Rendering</div>
+                <div class="tech-item">Canvas Procedural Textures</div>
+                <div class="tech-item">PBR Materials</div>
+                <div class="tech-item">Responsive Lighting</div>
+                <div class="tech-item">Theme System (5 Palettes)</div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h4>How to Use This Playground</h4>
+            <p><strong>Material Playground:</strong> Drop-down menus to switch between glitter presets and color palettes. Watch the 3D sphere update in real-time with different material properties.</p>
+            <p><strong>Hero Concepts:</strong> Each hero is a full-screen immersive experience. Move your mouse to interact with the visuals. Use the theme switcher (top right) to preview all five color palettes.</p>
+            <p><strong>Development Focus:</strong> These experiments showcase procedural glitter, metallic reflections, responsive lighting, and cursor-driven interactivity. All materials use realistic PBR (Physically Based Rendering) principles.</p>
+        </div>
+
+        <div class="info-section">
+            <h4>Theme System</h4>
+            <p>All experiments support five interchangeable color palettes with metallic silver (#C0C0C0) as the constant primary color across all themes:</p>
+            <div class="tech-list">
+                <div class="tech-item">Electric Cobalt (Default)</div>
+                <div class="tech-item">Imperial Sapphire</div>
+                <div class="tech-item">Arctic Steel</div>
+                <div class="tech-item">Deep Atlantic</div>
+                <div class="tech-item">Midnight Titanium</div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h4>Next Steps</h4>
+            <p><strong>User Review:</strong> Review all three hero concepts and select the direction(s) you'd like to develop further.</p>
+            <p><strong>Material Refinement:</strong> Based on feedback, we can refine glitter parameters, lighting models, and animation responsiveness.</p>
+            <p><strong>Site Integration:</strong> Once approved, we'll integrate the selected hero and material approach across the full website, maintaining the visual impact while ensuring readability and navigation.</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2026 Dina Dynamics — Design Playground | Phase 3 Experimentation | All themes available | <a href="material-playground.html" style="color: var(--accent-primary);">Material Lab</a></p>
+    </div>
+</body>
+</html>
